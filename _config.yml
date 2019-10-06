@@ -21,7 +21,7 @@
 title: Augusto B. Corrêa
 email: augusto.blaascorrea@unibas.ch
 description: >- # this means to ignore newlines until "baseurl:"
-  Testing GitHub Pages.
+  A Scientific Diary.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  abcorrea
@@ -53,4 +53,11 @@ plugins:
 
 
 # Website stuff
+header_pages:
+ - about.markdown
+ - publications.markdown
+
+
 show_excerpts: true
+
+
