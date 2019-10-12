@@ -58,6 +58,9 @@ header_pages:
  - publications.markdown
 
 
+# Scripts
+google_analytics: UA-149896494-1
+
 show_excerpts: true
 
 
