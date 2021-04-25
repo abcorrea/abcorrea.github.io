@@ -4,10 +4,17 @@ title: Publications
 permalink: /publications/
 ---
 
++ Augusto B. Corrêa, Guillem Francès, Florian Pommerening, and Malte Helmert. <br />
+**Delete-Relaxation Heuristics for Lifted Classical Planning.**<br/>
+In *Proceedings of the 31st International Conference on Automated Planning and Scheduling<br/> (ICAPS 2021)*. 2021. <br/>
+[(PDF)](../papers/correa-et-al-icaps2021.pdf)
+
 + Augusto B. Corrêa, Florian Pommerening, Malte Helmert and Guillem Francès. <br />
 **Lifted Successor Generation using Query Optimization Techniques.**<br/>
 In *Proceedings of the 30th International Conference on Automated Planning and Scheduling<br/> (ICAPS 2020)*, pp. 80-89. 2020. <br/>
 [(PDF)](../papers/correa-et-al-icaps2020.pdf)
+[(Poster)](../papers/correa-et-al-icaps2020-poster.pdf)
+[(Slides)](../papers/correa-et-al-icaps2020-slides.pdf)
 
 + Augusto B. Corrêa. <br />
 **Planning using Lifted Task Representations.**<br/>
