@@ -114,7 +114,7 @@ experimental data. If not, feel free to ask by email.
  In Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI 2019), pp. 5554-5561. 2019.
 
 - **Augusto B. Corrêa** and Florian Pommerening.\
- [An Empirical Study of Perfect Potential Heuristics](../assets/pdf/correa-et-al-icaps2019.pdf).\
+ [An Empirical Study of Perfect Potential Heuristics](../assets/pdf/correa-pommerening-icaps2019.pdf).\
  In Proceedings of the 29th International Conference on Automated Planning and Scheduling (ICAPS 2019), pp. 114-118. 2019.
 
 ## 2018
