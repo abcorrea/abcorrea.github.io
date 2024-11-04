@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Junior Research Fellow at Christ Church College, University of Oxford, UK
+subtitle: Junior Research Fellow at Christ Church college, University of Oxford, UK
 
 profile:
   align: right
@@ -19,7 +19,7 @@ social: false  # includes social icons at the bottom of the page
 
 **Hi!**
 
-I am a Junior Research Fellow at Christ Church College, University of Oxford,
+I am a Junior Research Fellow at Christ Church college, University of Oxford,
 United Kingdom. My research is on **automated planning**, with a particular
 focus on **how to plan over different representations**. Most of my previous
 work was on **lifted planning** and **grounding**. But I also worked on other
