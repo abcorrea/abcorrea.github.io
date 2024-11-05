@@ -48,11 +48,11 @@ experimental data. If not, feel free to ask by email.
  In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.
 
 - Daniel Doebber, André Grahl Pereira and **Augusto B. Corrêa**.\
- OpCount4Sat: Operator Counting Heuristics for Satisficing Planning (planner abstract).\
+ [OpCount4Sat: Operator Counting Heuristics for Satisficing Planning (planner abstract)](../assets/pdf/doebber-et-al-ipc2023.pdf).\
  In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.
 
 - Clemens Büchner, Remo Christen, **Augusto B. Corrêa**, Salomé Eriksson, Patrick Ferber, Jendrik Seipp and Silvan Sievers.\
- Fast Downward Stone Soup 2023 (planner abstract).\
+ [Fast Downward Stone Soup 2023 (planner abstract)](../assets/pdf/buechner-et-al-ipc2023.pdf).\
  In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.
 
 - **Augusto B. Corrêa**, Markus Hecher, Malte Helmert, Davide Mario Longo, Florian Pommerening and Stefan Woltran.\
@@ -65,22 +65,17 @@ experimental data. If not, feel free to ask by email.
 
 ## 2022
 
-- Mohammad Abdulaziz, Florian Pommerening and **Augusto B. Corrêa**.\
- Mechanically Proving Guarantees of Generalized Heuristics: First Results and Ongoing Work.\
- In Proceedings of the Sixth Workshop on Generalization in Planning (GenPlan 2022). 2022.\
- Note: This work was also presented at HSDIP 2022. Due to different page limits, the HSDIP version has some additional details.
-
 - Lucas Galery Käser, Clemens Büchner, **Augusto B. Corrêa**, Florian Pommerening and Gabriele Röger.\
- Machetli: Simplifying Input Files for Debugging.\
+ [Machetli: Simplifying Input Files for Debugging](../assets/pdf/galery-kaeser-et-al-icaps2022demo.pdf).\
  In System Demonstrations at the 32nd International Conference on Automated Planning and Scheduling (ICAPS 2022). 2022.
 
 - Mohammad Abdulaziz, Florian Pommerening and **Augusto B. Corrêa**.\
- Mechanically Proving Guarantees of Generalized Heuristics: First Results and Ongoing Work.\
+ [Mechanically Proving Guarantees of Generalized Heuristics: First Results and Ongoing Work](../assets/pdf/abdulaziz-et-al-icaps2022wshsdip.pdf).\
  In Proceedings of the ICAPS 2022 Workshop on Heuristics and Search for Domain-independent Planning (HSDIP 2022). 2022.\
  Note: This work was also presented at GenPlan 2022. Due to different page limits, the HSDIP version has some additional details.
 
 - Malte Helmert, Silvan Sievers, Alexander Rovner and **Augusto B. Corrêa**.\
- On the Complexity of Heuristic Synthesis for Satisficing Classical Planning: Potential Heuristics and Beyond.\
+ [On the Complexity of Heuristic Synthesis for Satisficing Classical Planning: Potential Heuristics and Beyond](../assets/pdf/helmert-et-al-icaps2023.pdf).\
  In Proceedings of the 32nd International Conference on Automated Planning and Scheduling (ICAPS 2022), pp. 124-133. 2022.
 
 - **Augusto B. Corrêa** and Jendrik Seipp.\
@@ -98,7 +93,7 @@ experimental data. If not, feel free to ask by email.
  In Proceedings of the 31st International Conference on Automated Planning and Scheduling (ICAPS 2021), pp. 94-102. 2021.
 
 - Rik de Graaff, **Augusto B. Corrêa** and Florian Pommerening.\
- Concept Languages as Expert Input for Generalized Planning: Preliminary Results.\
+ [Concept Languages as Expert Input for Generalized Planning: Preliminary Results](../assets/pdf/de-graaff-et-al-icaps2021wskeps.pdf).\
  In Proceedings of the ICAPS 2021 Workshop on Knowledge Engineering for Planning and Scheduling (KEPS 2021). 2021.
 
 ## 2020
@@ -110,7 +105,7 @@ experimental data. If not, feel free to ask by email.
 ## 2019
 
 - Guillem Francès, **Augusto B. Corrêa**, Cedric Geissmann and Florian Pommerening.\
- Generalized Potential Heuristics for Classical Planning.\
+ [Generalized Potential Heuristics for Classical Planning](../assets/pdf/frances-et-al-ijcai2019.pdf).\
  In Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI 2019), pp. 5554-5561. 2019.
 
 - **Augusto B. Corrêa** and Florian Pommerening.\
