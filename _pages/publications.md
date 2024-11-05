@@ -22,7 +22,8 @@ experimental data. If not, feel free to ask by email.
 
 - **Augusto B. Corrêa**, Giuseppe De Giacomo, Malte Helmert and Sasha Rubin.\
  [Planning with Object Creation](../assets/pdf/correa-et-al-icaps2024.pdf).\
- In Proceedings of the 34th International Conference on Automated Planning and Scheduling (ICAPS 2024), pp. 104-113. 2024.
+ In Proceedings of the 34th International Conference on Automated Planning and Scheduling (ICAPS 2024), pp. 104-113. 2024.\
+[(technical report)](../assets/pdf/correa-et-al-tr2024.pdf)
 
 - **Augusto B. Corrêa** and Jendrik Seipp.\
  [Consolidating LAMA with Best-First Width Search](../assets/pdf/correa-seipp-icaps2024wshsdip.pdf).\
@@ -61,7 +62,8 @@ experimental data. If not, feel free to ask by email.
 
 - **Augusto B. Corrêa**, Clemens Büchner and Remo Christen.\
  [Zero-Knowledge Proofs for Classical Planning Problems](../assets/pdf/correa-et-al-aaai2023.pdf).\
- In Proceedings of the 37th AAAI Conference on Artificial Intelligence (AAAI 2023), pp. 11955-11962. 2023.
+ In Proceedings of the 37th AAAI Conference on Artificial Intelligence (AAAI 2023), pp. 11955-11962. 2023.\
+ [(technical report)](../assets/pdf/correa-et-al-tr2023.pdf)
 
 ## 2022
 
@@ -84,7 +86,8 @@ experimental data. If not, feel free to ask by email.
 
 - **Augusto B. Corrêa**, Florian Pommerening, Malte Helmert and Guillem Francès.\
  [The FF Heuristic for Lifted Classical Planning](../assets/pdf/correa-et-al-aaai2022.pdf).\
- In Proceedings of the 36th AAAI Conference on Artificial Intelligence (AAAI 2022), pp. 9716-9723. 2022.
+ In Proceedings of the 36th AAAI Conference on Artificial Intelligence (AAAI 2022), pp. 9716-9723. 2022.\
+ [(technical report)](../assets/pdf/correa-et-al-tr2022.pdf)
 
 ## 2021
 
@@ -106,7 +109,8 @@ experimental data. If not, feel free to ask by email.
 
 - Guillem Francès, **Augusto B. Corrêa**, Cedric Geissmann and Florian Pommerening.\
  [Generalized Potential Heuristics for Classical Planning](../assets/pdf/frances-et-al-ijcai2019.pdf).\
- In Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI 2019), pp. 5554-5561. 2019.
+ In Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI 2019), pp. 5554-5561. 2019.\
+ [(technical report)](../assets/pdf/frances-et-al-tr2019.pdf)
 
 - **Augusto B. Corrêa** and Florian Pommerening.\
  [An Empirical Study of Perfect Potential Heuristics](../assets/pdf/correa-pommerening-icaps2019.pdf).\
