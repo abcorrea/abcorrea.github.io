@@ -12,7 +12,7 @@ profile:
 
 news: false  # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
-social: false  # includes social icons at the bottom of the page
+social: true  # includes social icons at the bottom of the page
 ---
 
 <br>
@@ -33,7 +33,6 @@ University of Rio Grande do Sul, Brazil, under the supervision of Prof. André
 G. Pereira and Prof. Marcus Ritt.
 
 <br>
-<br>
 
 ### Contact
 
@@ -43,3 +42,5 @@ OX1 1DP\
 United Kingdom
 
 Email: <augusto.blaascorrea@chch.ox.ac.uk>
+
+<br>
