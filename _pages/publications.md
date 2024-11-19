@@ -12,6 +12,11 @@ experimental data. If not, feel free to ask by email.
 ## 2024
 
 - **Augusto B. Corrêa**.\
+ [The Universal PDDL Domain](../assets/pdf/haslum-correa-arxiv2024.pdf).\
+ arXiv:2411.08040, 2024. \
+ [(arXiv)](https://arxiv.org/abs/2411.08040)
+
+- **Augusto B. Corrêa**.\
  [Planning with Different Representations](../assets/pdf/correa-phd2024.pdf).\
  Ph.D. Thesis, University of Basel, Switzerland, 2024.\
  Date of disputation: 2024-09-26.
