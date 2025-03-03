@@ -11,8 +11,8 @@ experimental data. If not, feel free to ask by email.
 
 ## 2025
 
-- David Speck, Markus Hecher, Daniel Gnad, Johannes K. Fichte and **Augusto B. Corrêa**.
-  [Counting and Reasoning with Plans](../assets/pdf/speck-at-al-aaai2025.pdf).
+- David Speck, Markus Hecher, Daniel Gnad, Johannes K. Fichte and **Augusto B. Corrêa**.\
+  [Counting and Reasoning with Plans](../assets/pdf/speck-et-al-aaai2025.pdf).\
   In Proceedings of 39th AAAI Conference on Artificial Intelligence (AAAI 2025). 2025.
 
 ## 2024
