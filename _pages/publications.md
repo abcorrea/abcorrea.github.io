@@ -88,7 +88,7 @@ experimental data. If not, feel free to ask by email.
  Note: This work was also presented at GenPlan 2022. Due to different page limits, the HSDIP version has some additional details.
 
 - Malte Helmert, Silvan Sievers, Alexander Rovner and **Augusto B. Corrêa**.\
- [On the Complexity of Heuristic Synthesis for Satisficing Classical Planning: Potential Heuristics and Beyond](../assets/pdf/helmert-et-al-icaps2023.pdf).\
+ [On the Complexity of Heuristic Synthesis for Satisficing Classical Planning: Potential Heuristics and Beyond](../assets/pdf/helmert-et-al-icaps2022.pdf).\
  In Proceedings of the 32nd International Conference on Automated Planning and Scheduling (ICAPS 2022), pp. 124-133. 2022.
 
 - **Augusto B. Corrêa** and Jendrik Seipp.\
