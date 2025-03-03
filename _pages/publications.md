@@ -9,9 +9,15 @@ nav: true
 Most papers contain a Zenodo link containing the source code and sometimes the
 experimental data. If not, feel free to ask by email.
 
+## 2025
+
+- David Speck, Markus Hecher, Daniel Gnad, Johannes K. Fichte and **Augusto B. Corrêa**.
+  [Counting and Reasoning with Plans](../assets/pdf/speck-at-al-aaai2025.pdf).
+  In Proceedings of 39th AAAI Conference on Artificial Intelligence (AAAI 2025). 2025.
+
 ## 2024
 
-- **Augusto B. Corrêa**.\
+- Patrik Haslum and **Augusto B. Corrêa**.\
  [The Universal PDDL Domain](../assets/pdf/haslum-correa-arxiv2024.pdf).\
  arXiv:2411.08040, 2024. \
  [(arXiv)](https://arxiv.org/abs/2411.08040)
