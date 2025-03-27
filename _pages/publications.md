@@ -11,6 +11,11 @@ experimental data. If not, feel free to ask by email.
 
 ## 2025
 
+- **Augusto B. Corrêa**, André G. Pereira and Jendrik Seipp.\
+  [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](../assets/pdf/correa-et-al-arxiv2025.pdf).\
+  arXiv:2503.18809, 2025.
+  [(arXiv)](https://arxiv.org/abs/2503.18809).
+
 - David Speck, Markus Hecher, Daniel Gnad, Johannes K. Fichte and **Augusto B. Corrêa**.\
   [Counting and Reasoning with Plans](../assets/pdf/speck-et-al-aaai2025.pdf).\
   In Proceedings of 39th AAAI Conference on Artificial Intelligence (AAAI 2025). 2025.
