@@ -11,6 +11,14 @@ experimental data. If not, feel free to ask by email.
 
 ## 2025
 
+- **Augusto B. Corrêa**.\
+ [ Delete-Free Planning with Object Creation is Undecidable](../assets/pdf/correa-icaps2025.pdf).\
+ In Proceedings of the 35th International Conference on Automated Planning and Scheduling (ICAPS 2025). 2025.
+
+- **Augusto B. Corrêa** and Jendrik Seipp.\
+ [Alternation-Based Novelty Search](../assets/pdf/correa-seipp-icaps2025.pdf).\
+ In Proceedings of the 35th International Conference on Automated Planning and Scheduling (ICAPS 2025). 2025.
+
 - **Augusto B. Corrêa**, André G. Pereira and Jendrik Seipp.\
   [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](../assets/pdf/correa-et-al-arxiv2025.pdf).\
   arXiv:2503.18809, 2025.
