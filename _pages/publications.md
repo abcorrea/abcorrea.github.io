@@ -26,7 +26,7 @@ arXiv:2512.24940, 2025. \
 
 - **Augusto B. Corrêa**, André G. Pereira and Jendrik Seipp.\
   [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](../assets/pdf/correa-et-al-neurips2025.pdf).\
-  In Proceedings of the 39th Annual Conference on Neural Information Processing Systems.
+  In Proceedings of the 39th Annual Conference on Neural Information Processing Systems.\
   [(arXiv)](https://arxiv.org/abs/2503.18809)[(code)](https://doi.org/10.5281/zenodo.17400964).
 
 - David Speck, Markus Hecher, Daniel Gnad, Johannes K. Fichte and **Augusto B. Corrêa**.\
