@@ -6,6 +6,14 @@ description:
 nav: true
 ---
 
+# **LLM-Generated Heuristics** for Classical Planning
+
+We use LLMs to generate Python heuristic functions for classical planning,
+studying how to integrate LLM-generated code into planning systems while
+preserving formal correctness guarantees. Published at **NeurIPS 2025**. Code
+available on [Zenodo](https://zenodo.org/records/17400964).
+
+<br>
 
 # **Powerlifted**: A Lifted Classical Planning System
 
@@ -16,23 +24,12 @@ has different search algorithms and proceedings implemented on top of it.
 
 <br>
 
-# A Collection of **Hard-to-Ground Domains**
+# **Grounding** Infrastructure for Planning
 
-The [htg-domains](https://github.com/abcorrea/htg-domains/) contains a
-collection of *hard-to-ground* (HTG) classical planning domains. These domains
-come from many different sources, which you can find described in the repo.
-
-<br>
-
-# **Grounders** for Planning
-
-We also have tested [different grounders for planning
-systems](https://github.com/abcorrea/asp-grounding-planning), although these do
-not give you intermediate representations (e.g., SAS+) but simply output the
-(relaxed) reachable actions and atoms. There is also a public implementation of
-[Fast Downward using these different
-grounders](https://github.com/abcorrea/downward-new-grounder).
-
-Moreover, you might be interested in
-[CounterAction](https://github.com/abcorrea/counteraction), our tool for
-*counting actions without grounding*.
+- [htg-domains](https://github.com/abcorrea/htg-domains/): A collection of
+  *hard-to-ground* (HTG) classical planning domains from many different sources.
+- [Grounders for planning](https://github.com/abcorrea/asp-grounding-planning):
+  Different grounders that output (relaxed) reachable actions and atoms, with a
+  [Fast Downward integration](https://github.com/abcorrea/downward-new-grounder).
+- [CounterAction](https://github.com/abcorrea/counteraction): A tool for
+  *counting actions without grounding*.
