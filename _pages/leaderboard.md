@@ -56,6 +56,7 @@ function numericSort(a, b) {
   <thead>
     <tr>
       <th data-sortable="true">Model</th>
+      <th data-sortable="true" data-sorter="numericSort">Total</th>
       <th data-sortable="true" data-sorter="numericSort">Block.</th>
       <th data-sortable="true" data-sorter="numericSort">Child.</th>
       <th data-sortable="true" data-sorter="numericSort">Floor.</th>
@@ -64,12 +65,12 @@ function numericSort(a, b) {
       <th data-sortable="true" data-sorter="numericSort">Soko.</th>
       <th data-sortable="true" data-sorter="numericSort">Span.</th>
       <th data-sortable="true" data-sorter="numericSort">Trans.</th>
-      <th data-sortable="true" data-sorter="numericSort">Total</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Gemini 3.1 Pro (Preview)</td>
+      <td><strong>460</strong></td>
       <td><strong>84</strong></td>
       <td>58</td>
       <td><strong>30</strong></td>
@@ -78,10 +79,10 @@ function numericSort(a, b) {
       <td>31</td>
       <td>66</td>
       <td>55</td>
-      <td><strong>460</strong></td>
     </tr>
     <tr>
       <td>GPT-5</td>
+      <td>450</td>
       <td>79</td>
       <td><strong>61</strong></td>
       <td>12</td>
@@ -90,10 +91,10 @@ function numericSort(a, b) {
       <td>30</td>
       <td>68</td>
       <td><strong>70</strong></td>
-      <td>450</td>
     </tr>
     <tr>
       <td><em>Fast Down. Stone Soup'23</em></td>
+      <td>448</td>
       <td>58</td>
       <td>45</td>
       <td>23</td>
@@ -102,10 +103,10 @@ function numericSort(a, b) {
       <td><strong>40</strong></td>
       <td>64</td>
       <td>64</td>
-      <td>448</td>
     </tr>
     <tr>
       <td>Gemini 3 Pro (Preview)</td>
+      <td>426</td>
       <td><strong>84</strong></td>
       <td>60</td>
       <td>12</td>
@@ -114,10 +115,10 @@ function numericSort(a, b) {
       <td>27</td>
       <td>66</td>
       <td>56</td>
-      <td>426</td>
     </tr>
     <tr>
       <td>GPT-5.2</td>
+      <td>407</td>
       <td>73</td>
       <td>58</td>
       <td>10</td>
@@ -126,10 +127,10 @@ function numericSort(a, b) {
       <td>31</td>
       <td>66</td>
       <td>59</td>
-      <td>407</td>
     </tr>
     <tr>
       <td><em>LAMA</em></td>
+      <td>396</td>
       <td>55</td>
       <td>35</td>
       <td>12</td>
@@ -138,10 +139,10 @@ function numericSort(a, b) {
       <td><strong>40</strong></td>
       <td>30</td>
       <td>66</td>
-      <td>396</td>
     </tr>
     <tr>
       <td>o1</td>
+      <td>373</td>
       <td>29</td>
       <td>60</td>
       <td>9</td>
@@ -150,10 +151,10 @@ function numericSort(a, b) {
       <td>32</td>
       <td>69</td>
       <td>44</td>
-      <td>373</td>
     </tr>
     <tr>
       <td>DeepSeek R1</td>
+      <td>373</td>
       <td>66</td>
       <td>22</td>
       <td>4</td>
@@ -162,10 +163,10 @@ function numericSort(a, b) {
       <td>30</td>
       <td><strong>70</strong></td>
       <td>59</td>
-      <td>373</td>
     </tr>
     <tr>
       <td>Gemini 2.5 Pro</td>
+      <td>361</td>
       <td>52</td>
       <td><strong>61</strong></td>
       <td>4</td>
@@ -174,10 +175,10 @@ function numericSort(a, b) {
       <td>30</td>
       <td>30</td>
       <td>57</td>
-      <td>361</td>
     </tr>
     <tr>
       <td>o3</td>
+      <td>354</td>
       <td>36</td>
       <td>45</td>
       <td>11</td>
@@ -186,10 +187,10 @@ function numericSort(a, b) {
       <td>27</td>
       <td>66</td>
       <td>57</td>
-      <td>354</td>
     </tr>
     <tr>
       <td>DeepSeek V3</td>
+      <td>343</td>
       <td>45</td>
       <td>55</td>
       <td>3</td>
@@ -198,10 +199,10 @@ function numericSort(a, b) {
       <td>31</td>
       <td>69</td>
       <td>42</td>
-      <td>343</td>
     </tr>
     <tr>
       <td>GPT-4.1</td>
+      <td>327</td>
       <td>54</td>
       <td>59</td>
       <td>11</td>
@@ -210,10 +211,10 @@ function numericSort(a, b) {
       <td>27</td>
       <td>63</td>
       <td>45</td>
-      <td>327</td>
     </tr>
     <tr>
       <td>Gemini 2.0 Flash Think.</td>
+      <td>305</td>
       <td>37</td>
       <td>14</td>
       <td>8</td>
@@ -222,10 +223,10 @@ function numericSort(a, b) {
       <td>32</td>
       <td>30</td>
       <td>57</td>
-      <td>305</td>
     </tr>
     <tr>
       <td>Gemini 2.0 Flash</td>
+      <td>296</td>
       <td>35</td>
       <td>32</td>
       <td>4</td>
@@ -234,10 +235,10 @@ function numericSort(a, b) {
       <td>31</td>
       <td>30</td>
       <td>42</td>
-      <td>296</td>
     </tr>
     <tr>
       <td>GPT-4o</td>
+      <td>258</td>
       <td>35</td>
       <td>24</td>
       <td>3</td>
@@ -246,10 +247,10 @@ function numericSort(a, b) {
       <td>28</td>
       <td>30</td>
       <td>43</td>
-      <td>258</td>
     </tr>
     <tr>
       <td>DeepSeek R1 DistQwen14B</td>
+      <td>214</td>
       <td>34</td>
       <td>16</td>
       <td>3</td>
@@ -258,10 +259,10 @@ function numericSort(a, b) {
       <td>24</td>
       <td>30</td>
       <td>45</td>
-      <td>214</td>
     </tr>
     <tr>
       <td>Qwen3 4B Instruct</td>
+      <td>208</td>
       <td>28</td>
       <td>13</td>
       <td>2</td>
@@ -270,10 +271,10 @@ function numericSort(a, b) {
       <td>25</td>
       <td>30</td>
       <td>43</td>
-      <td>208</td>
     </tr>
     <tr>
       <td>Gemma 3 12B</td>
+      <td>187</td>
       <td>30</td>
       <td>12</td>
       <td>1</td>
@@ -282,7 +283,6 @@ function numericSort(a, b) {
       <td>31</td>
       <td>30</td>
       <td>34</td>
-      <td>187</td>
     </tr>
   </tbody>
 </table>
