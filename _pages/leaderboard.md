@@ -7,17 +7,26 @@ nav: true
 pretty_table: true
 ---
 
+This leaderboard shows the performance of LLM-generated heuristics for traditional PDDL planning domains. Our [original
+paper](../assets/pdf/correa-et-al-neurips2025.pdf) only contained models released until mid-2025. We created this leaderboard to evaluate the performance of frontier models as they are released. 
+
 Coverage (number of solved tasks) of LLM-generated
 heuristic functions evaluated using greedy best-first search in
 [Pyperplan](https://doi.org/10.5281/zenodo.3700819). Each heuristic is
 selected from a pool of 25 candidates based on training set performance. 
 
-Best values per domain are shown in <strong>bold</strong>. Entries in <em>italics</em> are
-baseline planners (not LLM-generated heuristics). All domains have 90 test
-tasks (720 total). Each run is limited to 30 minutes and 8 GiB. Test tasks are
+All domains have 90 test
+tasks (720 total), following the easy/medium/hard split used in the IPC 2023. Each run is limited to 30 minutes and 8 GiB. Test tasks are
 out-of-distribution. See [our NeurIPS 2025
 paper](../assets/pdf/correa-et-al-neurips2025.pdf) for more details.
 
+Best values per domain are shown in <strong>bold</strong>. Entries in <em>italics</em> are
+baseline planners (not LLM-generated heuristics).
+
+<blockquote class="block-warning">
+<h5>Last Update (2026-02-21)</h5>
+  <p style="font-size: 1rem;">Added results for GPT 5.2, Gemini 3 Pro (Preview) and Gemini 3.1 Pro (Preview).</p>
+</blockquote>
 
 <br>
 
@@ -60,8 +69,20 @@ function numericSort(a, b) {
   </thead>
   <tbody>
     <tr>
+      <td>Gemini 3.1 Pro (Preview)</td>
+      <td><strong>84</strong></td>
+      <td>58</td>
+      <td><strong>30</strong></td>
+      <td>83</td>
+      <td>53</td>
+      <td>31</td>
+      <td>66</td>
+      <td>55</td>
+      <td><strong>460</strong></td>
+    </tr>
+    <tr>
       <td>GPT-5</td>
-      <td><strong>79</strong></td>
+      <td>79</td>
       <td><strong>61</strong></td>
       <td>12</td>
       <td><strong>90</strong></td>
@@ -69,19 +90,43 @@ function numericSort(a, b) {
       <td>30</td>
       <td>68</td>
       <td><strong>70</strong></td>
-      <td><strong>450</strong></td>
+      <td>450</td>
     </tr>
     <tr>
       <td><em>Fast Down. Stone Soup'23</em></td>
       <td>58</td>
       <td>45</td>
-      <td><strong>23</strong></td>
+      <td>23</td>
       <td><strong>90</strong></td>
       <td>64</td>
       <td><strong>40</strong></td>
       <td>64</td>
       <td>64</td>
       <td>448</td>
+    </tr>
+    <tr>
+      <td>Gemini 3 Pro (Preview)</td>
+      <td><strong>84</strong></td>
+      <td>60</td>
+      <td>12</td>
+      <td>88</td>
+      <td>33</td>
+      <td>27</td>
+      <td>66</td>
+      <td>56</td>
+      <td>426</td>
+    </tr>
+    <tr>
+      <td>GPT-5.2</td>
+      <td>73</td>
+      <td>58</td>
+      <td>10</td>
+      <td>75</td>
+      <td>35</td>
+      <td>31</td>
+      <td>66</td>
+      <td>59</td>
+      <td>407</td>
     </tr>
     <tr>
       <td><em>LAMA</em></td>
@@ -192,18 +237,6 @@ function numericSort(a, b) {
       <td>296</td>
     </tr>
     <tr>
-      <td><em>FF</em></td>
-      <td>27</td>
-      <td>25</td>
-      <td>12</td>
-      <td><strong>90</strong></td>
-      <td>34</td>
-      <td>36</td>
-      <td>30</td>
-      <td>41</td>
-      <td>295</td>
-    </tr>
-    <tr>
       <td>GPT-4o</td>
       <td>35</td>
       <td>24</td>
@@ -227,6 +260,30 @@ function numericSort(a, b) {
       <td>45</td>
       <td>214</td>
     </tr>
+    <tr>
+      <td>Qwen3 4B Instruct</td>
+      <td>28</td>
+      <td>13</td>
+      <td>2</td>
+      <td>48</td>
+      <td>19</td>
+      <td>25</td>
+      <td>30</td>
+      <td>43</td>
+      <td>208</td>
+    </tr>
+    <tr>
+      <td>Gemma 3 12B</td>
+      <td>30</td>
+      <td>12</td>
+      <td>1</td>
+      <td>30</td>
+      <td>19</td>
+      <td>31</td>
+      <td>30</td>
+      <td>34</td>
+      <td>187</td>
+    </tr>
   </tbody>
 </table>
 
@@ -234,5 +291,5 @@ function numericSort(a, b) {
 
 
 <blockquote class="block-danger">
-  <p style="font-size: 0.9rem;">If you want us to test another LLM, contact us directly via email.</p>
+  <p style="font-size: 0.9rem;">If you would like us to test another model, please contact us directly via email.</p>
 </blockquote>
