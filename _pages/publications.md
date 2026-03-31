@@ -9,6 +9,12 @@ nav: true
 Most papers contain a Zenodo link containing the source code and sometimes the
 experimental data. If not, feel free to ask by email.
 
+## 2026
+
+- **Augusto B. Corrêa**, Simon Dold, Malte Helmert.\
+ [Potential Heuristics as Real-Valued Multilinear Polynomials](../assets/pdf/correa-et-al-icaps2026.pdf).\
+ In Proceedings of the 36th International Conference on Automated Planning and Scheduling (ICAPS 2026). 2026.
+
 ## 2025
 
 - **Augusto B. Corrêa**, Yoav Gelberg, Luckeciano C. Melo, Ilia Shumailov, André G. Pereira, Yarin Gal.\

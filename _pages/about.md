@@ -35,11 +35,11 @@ G. Pereira and Prof. Marcus Ritt.
 
 ## News
 
+- [2026] Paper accepted at **ICAPS 2026**.
 - [2025] New preprint: "Iterative Deployment Improves Planning Skills in LLMs".
 - [2025] Co-organizing the **LM4Plan Workshop** at ICAPS 2025.
 - [2025] Paper accepted at **NeurIPS 2025**.
 - [2025] Awarded the **ICAPS Outstanding Dissertation Award for my Ph.D. thesis**.
-- [2025] Two papers accepted at **ICAPS 2025**.
 
 <br>
 
