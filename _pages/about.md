@@ -31,12 +31,7 @@ I currently also co-organise the **[LM4Plan Workshop](https://lm4plan.github.io/
 
 ## News
 
-- **[2026]** Paper accepted at **ICAPS 2026**: *Potential Heuristics as Real-Valued Multilinear Polynomials*.
-- **[2026]** Awarded the **Google Gemini Academic Program Award** for research on LLMs for planning.
-- **[2025]** Paper accepted at **NeurIPS 2025**: *[Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](https://arxiv.org/abs/2503.18809)*.
-- **[2025]** New preprint: *[Iterative Deployment Improves Planning Skills in LLMs](https://arxiv.org/abs/2512.24940)*.
-- **[2025]** Awarded the **[ICAPS Outstanding Dissertation Award](https://www.icaps-conference.org/awards/)** for my Ph.D. thesis.
-- **[2025]** Co-organising the **LM4Plan Workshop** at ICAPS 2025, ICAPS 2026, and ICML 2026.
+{% include news.liquid %}
 
 <br>
 
