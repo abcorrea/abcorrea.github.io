@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Junior Research Fellow at Christ Church college, University of Oxford, UK
+subtitle: "Junior Research Fellow · Christ Church · University of Oxford"
 
 profile:
   align: right
@@ -12,7 +12,7 @@ profile:
 
 news: false  # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
-social: true  # includes social icons at the bottom of the page
+social: false  # includes social icons at the bottom of the page
 ---
 
 <br>
@@ -33,15 +33,3 @@ I currently also co-organise the **[LM4Plan Workshop](https://lm4plan.github.io/
 
 {% include news.liquid %}
 
-<br>
-
-### Contact
-
-Christ Church\
-St Aldate's, Oxford\
-OX1 1DP\
-United Kingdom
-
-Email: <augusto.blaascorrea@chch.ox.ac.uk>
-
-<br>

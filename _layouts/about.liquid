@@ -12,6 +12,16 @@ layout: default
       {% endif %}
     </h1>
     <p class="desc">{{ page.subtitle }}</p>
+    <div class="profile-header-links">
+      {% if site.email %}
+      <div class="profile-header-links__email">Email: <a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
+      {% endif %}
+      <div class="profile-header-links__social">
+        {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}">GitHub</a>{% endif %}
+        {% if site.scholar_userid %}<a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}">Google Scholar</a>{% endif %}
+        {% if site.dblp_url %}<a href="{{ site.dblp_url }}">DBLP</a>{% endif %}
+      </div>
+    </div>
   </header>
 
   <article>
@@ -78,3 +88,4 @@ layout: default
     {% endif %}
   </article>
 </div>
+

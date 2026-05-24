@@ -2,6 +2,61 @@
  * Styles for the base elements of the theme.
  ******************************************************************************/
 
+// Font overrides
+body {
+  font-family: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+}
+
+// Keep the name/title at a reasonable size
+.post-title {
+  font-size: 1.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.profile-header-links {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  a {
+    color: var(--global-text-color-light);
+    text-decoration: none;
+    transition: color 0.15s;
+
+    &:hover {
+      color: var(--global-theme-color);
+    }
+  }
+
+  &__email {
+    color: var(--global-text-color-light);
+  }
+
+  &__social {
+    a {
+      margin-right: 3rem;
+    }
+
+    a:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 // Typography
 
 p,
