@@ -11,6 +11,16 @@ experimental data. If not, feel free to ask by email.
 
 ## 2026
 
+- Felipe Meneguzzi, Alexandre Buchweitz, **Augusto B. Corrêa**, Victor Scherer Putrich and André Grahl Pereira.\
+ [Hierarchical Task Network Planning with LLM-Generated Heuristics](../assets/pdf/meneguzzi-et-al-arxiv2026.pdf).\
+arXiv:2605.07707, 2026. \
+[(arXiv)](https://arxiv.org/abs/2605.07707)
+
+- André G. Pereira, **Augusto B. Corrêa** and Jendrik Seipp.\
+ [Property-Guided LLM Program Synthesis for Planning](../assets/pdf/pereira-et-al-arxiv2026.pdf).\
+arXiv:2605.16142, 2026. \
+[(arXiv)](https://arxiv.org/abs/2605.16142)
+
 - **Augusto B. Corrêa**, Simon Dold, Malte Helmert.\
  [Potential Heuristics as Real-Valued Multilinear Polynomials](../assets/pdf/correa-et-al-icaps2026.pdf).\
  In Proceedings of the 36th International Conference on Automated Planning and Scheduling (ICAPS 2026). 2026.
