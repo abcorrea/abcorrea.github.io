@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Potential Heuristics as Multilinear Polynomials — an illustrated guide</title>
+
+<!-- KaTeX for mathematics -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+<!-- Typefaces: Fraunces (display serif), Newsreader (body serif), Spline Sans Mono (figures) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:        #F3ECDA;   /* warm parchment, page */
+    --panel:     #F8F2E3;   /* lighter card */
+    --panel-2:   #ECE1C8;   /* sunk panel */
+    --ink:       #211D15;   /* near-black warm brown */
+    --ink-soft:  #4A4232;
+    --muted:     #7A6F5E;   /* muted brown-gray */
+    --accent:    #C2552D;   /* burnt terracotta */
+    --accent-d:  #9C3F1E;
+    --green:     #1F4A3A;   /* dark forest green */
+    --gold:      #B98B2E;
+    --line:      #D7C9A8;
+    --dark:      #26221A;   /* dark code panel */
+    --maxw:      1080px;
+    --shadow:    0 1px 0 #fff8 inset, 0 18px 40px -28px #3a2c1a88;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 700px at 80% -10%, #FBEFC9 0%, transparent 55%),
+      radial-gradient(900px 600px at -10% 10%, #F6E7CC 0%, transparent 50%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Newsreader", Georgia, serif;
+    font-optical-sizing:auto;
+    font-size:19px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+  }
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 26px}
+
+  /* ---------- reading progress + nav ---------- */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--accent),var(--gold));z-index:50}
+  nav.top{position:sticky;top:0;z-index:40;
+    backdrop-filter:blur(8px);
+    background:linear-gradient(180deg,#f3ecdaee,#f3ecda99);
+    border-bottom:1px solid var(--line)}
+  nav.top .wrap{display:flex;align-items:center;gap:18px;height:54px}
+  nav.top .brand{font-family:"Fraunces";font-weight:900;letter-spacing:.2px;font-size:17px}
+  nav.top .brand span{color:var(--accent)}
+  nav.top .links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+  nav.top a{font-family:"Spline Sans Mono",monospace;font-size:12.5px;text-decoration:none;
+    color:var(--muted);padding:6px 9px;border-radius:7px}
+  nav.top a:hover{color:var(--accent);background:#fff6}
+  @media(max-width:860px){nav.top .links{display:none}}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:78px 0 30px}
+  .kicker{font-family:"Spline Sans Mono",monospace;font-size:13px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--accent);font-weight:600}
+  h1.title{font-family:"Fraunces";font-weight:900;font-size:clamp(38px,7vw,76px);
+    line-height:1.02;letter-spacing:-.5px;margin:.28em 0 .2em}
+  h1.title em{font-style:italic;color:var(--green)}
+  .subtitle{font-size:22px;color:var(--ink-soft);max-width:40ch;font-style:italic;font-family:"Newsreader"}
+  .byline{margin-top:26px;font-family:"Spline Sans Mono",monospace;font-size:13.5px;color:var(--muted);line-height:1.9}
+  .byline b{color:var(--ink);font-weight:600}
+  .paper-link{display:inline-flex;align-items:center;gap:8px;font-family:"Spline Sans Mono",monospace;
+    font-size:14px;font-weight:600;letter-spacing:.02em;text-decoration:none;color:#fff;background:var(--accent);
+    border:1px solid var(--accent-d);border-radius:11px;padding:11px 18px;box-shadow:var(--shadow);transition:.16s}
+  .paper-link:hover{background:var(--accent-d);transform:translateY(-1px)}
+  .paper-link span{font-size:11px}
+  .hero-eq{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .hero-eq .chip{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:12px 16px;box-shadow:var(--shadow)}
+  .arrow{color:var(--accent);font-size:26px;font-family:"Spline Sans Mono"}
+
+  /* ---------- sections / prose ---------- */
+  section{padding:54px 0;border-top:1px solid var(--line)}
+  .sec-no{font-family:"Spline Sans Mono",monospace;color:var(--accent);font-size:13px;
+    letter-spacing:.28em;text-transform:uppercase;font-weight:600}
+  h2{font-family:"Fraunces";font-weight:900;font-size:clamp(28px,4.4vw,44px);line-height:1.05;
+    margin:.18em 0 .5em;letter-spacing:-.3px}
+  h3{font-family:"Fraunces";font-weight:600;font-size:25px;margin:1.6em 0 .3em;color:var(--green)}
+  p{margin:.8em 0}
+  .lead{font-size:21px}
+  .prose{max-width:none}
+  .wnum{width:25px;height:25px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-family:"Spline Sans Mono";font-weight:600;font-size:13px;flex:0 0 auto;box-shadow:0 0 0 4px #c2552d22}
+  a.ref{color:var(--accent-d);text-decoration:none;border-bottom:1px solid #c2552d44}
+  a.ref:hover{border-color:var(--accent)}
+  .cite{color:var(--muted);font-size:.88em}
+  .prose h3{font-family:"Fraunces";font-weight:600;font-size:24px;color:var(--green);margin:1.4em 0 .2em}
+  .term-row{display:flex;gap:8px;align-items:center;margin:7px 0;flex-wrap:wrap}
+  .term-row input[type=number]{width:60px;font-family:"Spline Sans Mono";font-size:15px;text-align:center;border:1px solid var(--line);border-radius:6px;padding:5px;background:#fffdf6;color:var(--ink)}
+  .term-row input:focus{outline:2px solid var(--accent);border-color:var(--accent)}
+  .term-row select{font-family:"Spline Sans Mono";font-size:14px;border:1px solid var(--line);border-radius:6px;padding:6px;background:#fffdf6;color:var(--ink)}
+  .term-row .xrm{padding:5px 9px;color:var(--muted);line-height:1}
+  .conc-feats{font-family:"Spline Sans Mono";font-size:14px;color:var(--ink);background:var(--dark);border-radius:10px;padding:11px 14px;margin-top:16px;word-break:break-word}
+  .conc-feats var{color:#f0b46a;font-style:italic;font-weight:600;font-family:"Fraunces"}
+  .spec .b small{font-size:10px}
+  strong{font-weight:600}
+  .drop::first-letter{font-family:"Fraunces";font-weight:900;float:left;font-size:64px;
+    line-height:.78;padding:6px 10px 0 0;color:var(--accent)}
+
+  /* margin note */
+  .note{border-left:3px solid var(--gold);background:#fbf4e0;padding:10px 16px;margin:18px 0;
+    font-size:17px;color:var(--ink-soft);border-radius:0 10px 10px 0}
+  .note b{color:var(--green)}
+
+  /* callout / theorem box */
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:20px 22px;margin:22px 0;box-shadow:var(--shadow)}
+  .box.prop{border-left:5px solid var(--green)}
+  .box.ex{border-left:5px solid var(--gold);background:#faf3e1}
+  .box.ex .lab{color:#94701d}
+  .box.ex p:first-of-type{margin-top:.15em}
+  .box.ex p:last-of-type{margin-bottom:0}
+  .box .lab{font-family:"Spline Sans Mono",monospace;font-size:12px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:6px}
+  .box.key{border-left:5px solid var(--accent);background:#fbeede}
+  .box.key .lab{color:var(--accent)}
+
+  /* ---------- widgets ---------- */
+  .widget{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    margin:28px 0;box-shadow:var(--shadow);overflow:hidden}
+  .widget .head{display:flex;align-items:center;gap:10px;padding:14px 20px;
+    background:linear-gradient(180deg,#fff7e6,#f4ead2);border-bottom:1px solid var(--line)}
+  .widget .head .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 4px #c2552d22}
+  .widget .head h4{margin:0;font-family:"Fraunces";font-weight:600;font-size:18px}
+  .widget .head .tag{margin-left:auto;font-family:"Spline Sans Mono";font-size:11px;
+    text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+  .widget .body{padding:22px 20px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .grid12{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:center}
+  @media(max-width:760px){.grid2,.grid12{grid-template-columns:1fr}}
+
+  .mono{font-family:"Spline Sans Mono",monospace}
+  .small{font-size:14px;color:var(--muted)}
+  .hint{font-size:14.5px;color:var(--muted);margin-top:10px}
+
+  /* bit toggles */
+  .bits{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .bit{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .bit .lbl{font-family:"Spline Sans Mono";font-size:14px;color:var(--muted)}
+  .switch{cursor:pointer;user-select:none;width:78px;height:40px;border-radius:30px;
+    border:1px solid var(--line);background:var(--panel-2);position:relative;transition:.18s}
+  .switch .knob{position:absolute;top:3px;left:3px;width:32px;height:32px;border-radius:50%;
+    background:#fff;box-shadow:0 2px 6px #0003;transition:.18s;display:flex;align-items:center;
+    justify-content:center;font-family:"Spline Sans Mono";font-weight:600;color:var(--muted)}
+  .switch.on{background:var(--green)}
+  .switch.on .knob{left:43px;color:var(--green)}
+  .switch .v0,.switch .v1{position:absolute;top:11px;font-family:"Spline Sans Mono";font-size:13px;color:#fff}
+  .switch .v0{right:12px}.switch .v1{left:14px;opacity:0}
+  .switch.on .v1{opacity:1}.switch.on .v0{opacity:0}
+
+  /* state-space svg */
+  .ss-state{cursor:pointer}
+  .ss-node{fill:var(--panel);stroke:var(--ink);stroke-width:1.6;transition:.15s}
+  .ss-node.active{fill:var(--accent);stroke:var(--accent-d)}
+  .ss-node.goal{stroke-dasharray:0;}
+  .ss-label{font-family:"Spline Sans Mono";font-size:13px;fill:var(--ink);pointer-events:none}
+  .ss-node.active ~ .ss-label{fill:#fff}
+  .ss-h{font-family:"Fraunces";font-weight:900;font-size:16px;fill:var(--green)}
+  .ss-edge{stroke:var(--muted);stroke-width:2;fill:none;marker-end:url(#arrow)}
+
+  /* representation cards */
+  .repcard{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
+  .repcard .name{font-family:"Fraunces";font-weight:600;color:var(--green);font-size:17px}
+  .repcard.equal{outline:2px solid var(--green);outline-offset:1px}
+  .calc-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    padding:3px 0;border-bottom:1px dashed var(--line);font-family:"Spline Sans Mono";font-size:14px}
+  .calc-row:last-child{border-bottom:0}
+  .res{font-family:"Fraunces";font-weight:900;font-size:30px;color:var(--accent)}
+  .res.match{color:var(--green)}
+
+  /* truth-table editor */
+  table.tt{border-collapse:collapse;width:100%;font-family:"Spline Sans Mono";font-size:14px}
+  table.tt th,table.tt td{border:1px solid var(--line);padding:7px 8px;text-align:center}
+  table.tt th{background:var(--panel-2);color:var(--muted);font-weight:600;font-size:12px;
+    text-transform:uppercase;letter-spacing:.1em}
+  table.tt input{width:62px;font-family:"Spline Sans Mono";font-size:15px;text-align:center;
+    border:1px solid var(--line);border-radius:6px;padding:4px;background:#fffdf6;color:var(--ink)}
+  table.tt input:focus{outline:2px solid var(--accent);border-color:var(--accent)}
+
+  .poly-out{font-family:"Fraunces";font-weight:600;font-size:24px;line-height:1.5;color:var(--ink);
+    background:var(--dark);color:#f3ecda;border-radius:12px;padding:16px 18px;margin-top:6px;
+    word-break:break-word}
+  .poly-out var{font-style:italic;color:#f0b46a;font-family:"Fraunces"}
+  .poly-out .c{color:#9ad1b6}
+  .coef-tbl{width:100%;border-collapse:collapse;font-family:"Spline Sans Mono";font-size:13.5px;margin-top:10px}
+  .coef-tbl td,.coef-tbl th{padding:5px 8px;border-bottom:1px solid var(--line)}
+  .coef-tbl th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+  .coef-tbl .mono-cell var{color:var(--accent-d);font-style:italic;font-family:"Fraunces";font-weight:600}
+  .coef-tbl .zero{color:#bbae92}
+  .deg-badge{display:inline-block;background:var(--green);color:#fff;border-radius:20px;
+    padding:2px 11px;font-family:"Spline Sans Mono";font-size:13px;margin-left:6px}
+
+  button.btn{font-family:"Spline Sans Mono";font-size:13px;border:1px solid var(--line);
+    background:var(--panel);color:var(--ink);border-radius:9px;padding:8px 13px;cursor:pointer;transition:.15s}
+  button.btn:hover{border-color:var(--accent);color:var(--accent)}
+  button.btn.sel{background:var(--green);color:#fff;border-color:var(--green)}
+  .btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+
+  /* steps */
+  .steps{font-family:"Spline Sans Mono";font-size:14.5px;line-height:1.9;background:var(--panel-2);
+    border-radius:12px;padding:16px 18px}
+  .steps .s{padding:3px 0}
+  .steps .op{color:var(--accent)}
+  .steps var{color:var(--accent-d);font-style:italic;font-weight:600;font-family:"Fraunces"}
+
+  /* histogram */
+  .hist{display:flex;align-items:flex-end;gap:8px;height:130px;padding-top:8px}
+  .hist .bar{flex:1;background:linear-gradient(180deg,var(--accent),#e0894f);border-radius:6px 6px 0 0;
+    position:relative;min-height:3px;transition:height .25s}
+  .hist .bar span{position:absolute;top:-20px;left:0;right:0;text-align:center;font-family:"Spline Sans Mono";
+    font-size:12px;color:var(--muted)}
+  .hist .bar small{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-family:"Spline Sans Mono";font-size:12px;color:var(--ink)}
+  .stat{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px}
+  .stat .s{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 16px;min-width:120px}
+  .stat .s .k{font-family:"Spline Sans Mono";font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+  .stat .s .v{font-family:"Fraunces";font-weight:900;font-size:28px;color:var(--green)}
+  .verdict{margin-top:18px;font-style:italic;color:var(--ink-soft)}
+
+  /* spectrum bars (concentration) */
+  .spec{display:flex;align-items:flex-end;gap:6px;height:120px}
+  .spec .b{flex:1;background:var(--muted);border-radius:4px 4px 0 0;min-height:2px;position:relative}
+  .spec .b.keep{background:linear-gradient(180deg,var(--green),#3f7a63)}
+  .spec .b small{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-family:"Spline Sans Mono";font-size:11px;color:var(--muted)}
+
+  table.cmp{width:100%;border-collapse:collapse;font-size:16px;margin:14px 0}
+  table.cmp td,table.cmp th{border:1px solid var(--line);padding:9px 12px;text-align:left}
+  table.cmp th{background:var(--panel-2);font-family:"Spline Sans Mono";font-size:12px;
+    text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+  table.cmp .mono{color:var(--accent-d)}
+
+  footer{padding:60px 0 90px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
+  footer h3{color:var(--green)}
+  .reflist{font-family:"Newsreader";font-size:15.5px;line-height:1.5;columns:2;column-gap:38px}
+  .reflist p{break-inside:avoid;margin:0 0 12px}
+  @media(max-width:760px){.reflist{columns:1}}
+  .tag-pill{display:inline-block;font-family:"Spline Sans Mono";font-size:11px;background:var(--panel-2);
+    border:1px solid var(--line);border-radius:20px;padding:2px 10px;color:var(--muted);margin:2px}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">ICAPS 2026 · interactive companion</div>
+  <h1 class="title">Potential Heuristics<br>as <em>Real-Valued Multilinear Polynomials</em></h1>
+  <div class="byline">
+    Augusto B. Corr&ecirc;a <span class="small">(University of Oxford)</span> &middot;
+    Simon Dold <span class="small">(University of Basel)</span> &middot;
+    Malte Helmert <span class="small">(University of Basel)</span>
+  </div>
+  <p style="margin-top:18px">
+    <a class="paper-link" href="https://abcorrea.github.io/assets/pdf/correa-et-al-icaps2026.pdf" target="_blank" rel="noopener">
+      <span aria-hidden="true">&#9656;</span> Read the full paper (PDF)
+    </a>
+  </p>
+
+  <div class="box key" style="margin-top:30px">
+    <div class="lab">Abstract</div>
+    <p style="margin:.2em 0">Potential functions are a compact and easy way to describe heuristics in classical planning. They are declarative, simple to understand, and clear to explain. Further, they are used as a tool to study the computational complexity of planning problems, and have connections to other concepts such as novelty measures and generalized planning. In this work, we cast potential functions as real-valued multilinear polynomials over the Booleans. While this might seem as a simple syntactic game at first glance, this automatically brings insights to the theory of potential heuristics. For example, we show that the multilinear polynomial representation can be computed using Fourier expansions. This immediately gives us a unique representation for each heuristic function, which allows us to study concepts such as correlation complexity more directly. Moreover, this also connects potential heuristics to a whole new field of computer science &mdash; analysis of Boolean functions &mdash; leading to consequences ranging from learning theory to performance prediction.</p>
+  </div>
+  <p class="hint" style="margin-top:16px">The text on this page is the paper's own. Its worked examples are extended by interactive versions you can play with as you read.</p>
+</header>
+
+<!-- ============================================================= -->
+<section id="intro">
+  <div class="sec-no">Section 1</div>
+  <h2>Introduction</h2>
+  <div class="prose">
+    <p class="lead drop"><em>Potential heuristics</em> <span class="cite">(Pommerening et al. 2015)</span> are not only useful for estimating goal-distances in classical planning. They can also be used to study the state-space topology of planning tasks <span class="cite">(e.g., Seipp et al. 2016; Corr&ecirc;a and Pommerening 2019; Helmert et al. 2022; Dold and Helmert 2024)</span>. Potential heuristics are real-valued functions that associate <em>weights</em> to <em>conjunctions of literals</em>. For example, in a planning task with propositional variables \(x\) and \(y\), we could have the potential heuristic</p>
+    <p style="text-align:center">\[ h_1(s) = 3 - 2[x] - 1[y] \]</p>
+    <p>where \([e]\) is \(1\) if \(e\) is true in \(s\) and \(0\) otherwise <span class="cite">(Knuth 1992)</span>. In a state \(s = \{x \mapsto 1, y \mapsto 0\}\), we have \(h(s) = 1\); in a state \(s' = \{x \mapsto 0, y \mapsto 1\}\), we have \(h(s') = 2\).</p>
+
+    <p>The descriptive nature of potential heuristics allows us to see <em>which interactions are relevant</em> for the task. For example, if a function \(h^{\text{pot}}\) synthesizing \(h^*\) for a task \(\Pi\) contains the feature \([x \land \overline{y}]\), we know that the interaction between variables \(x\) and \(y\) is relevant to encode \(h^*\). By analyzing their representation, we can see how different variables interact <span class="cite">(Pommerening et al. 2017; Steinmetz and Hoffmann 2018; Fi&scaron;er and Steinmetz 2024)</span>, or how hard it is to synthesize specific heuristics with specific properties <span class="cite">(Seipp et al. 2016; Corr&ecirc;a and Pommerening 2019; Franc&egrave;s et al. 2019)</span>. For instance, Seipp et al. <span class="cite">(2016)</span> use the <em>correlation complexity</em> metric to estimate how complex a potential heuristic must be to guide a hill-climbing search directly to a goal state. This allows us to reason about factored state spaces using a format that is easy to describe and understand. Additionally, potential heuristics can be used to establish bounds of other metrics, such as novelty width <span class="cite">(Dold and Helmert 2024)</span>.</p>
+
+    <p>But the <em>representation of a heuristic function as a potential heuristic is not unique</em>. For instance, \(h_1\) above describes the same function as</p>
+    <p style="text-align:center">\[ h_2(s) = 2[\overline{x}] + 1[\overline{y}] \]</p>
+    <p>and also as</p>
+    <p style="text-align:center">\[ h_3(s) = 3[\overline{x} \land \overline{y}] + 2[\overline{x} \land y] + 1[x \land \overline{y}], \]</p>
+    <p>despite all three having very distinct representations. It is not immediate to recognize that \(h_1\), \(h_2\), and \(h_3\) are all equivalent, and when we want to study larger tasks, comparing two potential representations to check their equivalence is even harder. Without having a unique, canonical representation for a function &mdash; such as \(h^*\) or \(h^+\) &mdash; it becomes challenging to estimate their analytical properties <span class="cite">(Seipp et al. 2016; Corr&ecirc;a and Pommerening 2019)</span>.</p>
+
+    <p>It turns out that this issue can be easily addressed. This is a problem of the <em>representation</em> we use for potential heuristics, and it can be sorted out once we use a new representation: multilinear polynomials.</p>
+
+    <p>In this paper, we study how to cast potential heuristics as multilinear polynomials over the Booleans. The main advantage of our new representation is that every heuristic function has a <em>unique</em> representation as a multilinear polynomial. This unique representation, called the <em>Fourier expansion</em>, gives us several tools to analyze hardness of planning tasks and heuristic functions. For example, one can estimate the mean heuristic values of a state space just from the Fourier expansion of the function &mdash; which has been shown empirically to help estimate performance <span class="cite">(Korf 1997; Korf et al. 2001; Holte 2013)</span> &mdash; or estimate how many random samples we need to approximate a specific heuristic function only by looking at its Fourier coefficients.</p>
+
+    <p>Our main contribution is to <em>connect potential heuristics with a well-known area of computer science</em>. We can benefit from studying potential heuristics under the lens of analysis of Boolean functions as a multilinear polynomial. This change in representation allows us to extend the theory of potential heuristics, while still preserving important existing properties. In this paper, we present this connection and highlight the main results that can be translated into potential heuristics.</p>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section id="background">
+  <div class="sec-no">Section 2</div>
+  <h2>Planning Tasks</h2>
+  <div class="prose">
+    <p class="lead">We consider propositional planning tasks, and we represent planning tasks as factored state spaces. A <em>factored state space</em> is a transition system \(\mathcal{T} = \langle \mathcal{P}, \mathcal{S}, T, \mathrm{cost}, s_I, S_* \rangle\), where \(\mathcal{P}\) is a finite set of <em>propositional variables</em>, \(\mathcal{S} = 2^{|\mathcal{P}|}\) is a finite set of <em>states</em>, \(T \subseteq \mathcal{S} \times \mathcal{S}\) is a <em>transition relation</em>, \(\mathrm{cost}: T \to \mathbb{R}_{\geq 0}\) is a <em>cost function</em>, \(s_I \in \mathcal{S}\) is the <em>initial state</em>, and \(S_* \subseteq \mathcal{S}\) is a set of <em>goal states</em>.</p>
+
+    <p>A state \(s \in \mathcal{S}\) is a complete Boolean assignment to the variables in \(\mathcal{P}\). We represent the Boolean domain as \(\{0,1\}\).</p>
+
+    <p>An <em>\(s\)-plan</em> for \(\mathcal{T}\) is a sequence of states \(\pi = \langle s_0,\ldots,s_n\rangle\) where \(s_0 = s\), \(s_n \in S_*\), and \((s_{i-1}, s_i) \in T\) for all \(1 \leq i \leq n\). If an \(s_I\)-plan for \(\mathcal{T}\) exists, then the task represented by \(\mathcal{T}\) is <em>solvable</em>. The cost of an \(s\)-plan is the sum of the costs of all transitions in the plan. A <em>heuristic</em> \(h\) maps a state \(s \in \mathcal{S}\) to a number \(h(s) \in \mathbb{R}\cup\{\infty\}\), indicating the estimated cost of an \(s\)-plan. A heuristic value of \(\infty\) indicates a state without any \(s\)-plan, also called an <em>unsolvable state</em>. The <em>perfect heuristic</em> \(h^*\) maps each state \(s\) to the cost of a cheapest \(s\)-plan.</p>
+
+    <p>A <em>feature</em> is a conjunction of literals with pairwise distinct variables. We say a feature \(f\) is true in a state \(s\) if \(s \models f\). We also use the Iverson brackets <span class="cite">(Knuth 1992)</span> \([f]\), which have value 1 if \(s \models f\) and 0 otherwise. The <em>size</em> of the feature \(f\) is the number of literals in \(f\).</p>
+
+    <div class="box ex"><div class="lab">Example 1</div>
+    <div style="display:flex;gap:28px;align-items:center;flex-wrap:wrap">
+      <p style="flex:1 1 340px;margin:0">Consider the planning task where a binary counter starting at \(00\) needs to be incremented to \(11\). We use this task as a running example throughout the paper. We can represent a state of this task with a variable \(x\) for the most significant bit and a variable \(y\) for the least significant one. There exists a total of four states. We also define the initial state \(s_I = \{x\mapsto0,y\mapsto0\}\) and the single goal state \(s_* = \{x\mapsto1,y\mapsto1\}\). The transition relation \(T\) contains transitions \((s, s')\) where state \(s'\) represents a simple binary increment to \(s\). The function \(h^*(s)\), in this case, defines the number of increments needed from \(s\) to state \(11\). It is explicitly defined as \(h^*(00) = 3\), \(h^*(01) = 2\), \(h^*(10) = 1\), and \(h^*(11) = 0\).</p>
+      <figure style="flex:0 0 auto;margin:0;text-align:center">
+        <svg viewBox="0 0 262 224" width="248" style="max-width:100%" aria-label="state space of the binary counter with goal distances">
+          <defs>
+            <marker id="arrowE1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 z" fill="var(--muted)"/>
+            </marker>
+          </defs>
+          <path d="M70,40 H150" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
+          <path d="M168,55 L82,150" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
+          <path d="M70,170 H150" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
+          <path d="M50,4 V12" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
+          <g><circle cx="50" cy="40" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="50" y="44" text-anchor="middle" class="ss-label">00</text><text x="84" y="32" text-anchor="middle" class="ss-h">3</text></g>
+          <g><circle cx="180" cy="40" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="180" y="44" text-anchor="middle" class="ss-label">01</text><text x="220" y="40" text-anchor="middle" class="ss-h">2</text></g>
+          <g><circle cx="50" cy="170" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="50" y="174" text-anchor="middle" class="ss-label">10</text><text x="12" y="174" text-anchor="middle" class="ss-h">1</text></g>
+          <g><circle cx="180" cy="170" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><circle cx="180" cy="170" r="30" fill="none" stroke="var(--green)" stroke-width="1.4"/><text x="180" y="174" text-anchor="middle" class="ss-label">11</text><text x="180" y="212" text-anchor="middle" class="ss-h">0</text></g>
+        </svg>
+        <figcaption class="small" style="margin-top:2px">Increment chain; green numbers are \(h^*\). The double-circled state is the goal.</figcaption>
+      </figure>
+    </div>
+    </div>
+  </div>
+
+  <h3>Potential Heuristics</h3>
+  <div class="prose">
+    <p>A <em>weight function</em> \(w: \mathcal{F} \to \mathbb{R}\) associates a set \(\mathcal{F}\) of features to real-valued weights. It represents a <em>potential heuristic</em> mapping a state \(s\) to the sum of weights for features of \(s\):</p>
+    <p style="text-align:center">\[ h^{\text{pot}}(s) = \sum_{f \in \mathcal{F}} w(f)\,[f] \]</p>
+    <p>Note that two distinct weight functions can represent the same heuristic. For now, we consider only potential heuristics that represent <em>real-valued Boolean functions</em>.</p>
+    <div class="note"><b>On infinite values.</b> There are different ways to adapt potential heuristics to infinite values (e.g., to represent unsolvable states). One can represent infinity as a number larger than the trivial upper bound for plan length, or use nested potential heuristics: one to discriminate solvable states, and one to estimate the distance <span class="cite">(Corr&ecirc;a and Pommerening 2019; Helmert et al. 2022)</span>.</div>
+    <p>The <em>dimension</em> of a potential heuristic is the size of its largest feature in its representation with non-zero weight.</p>
+    <p>Any heuristic function can be represented as a potential heuristic. This requires knowing the heuristic in every state explicitly.</p>
+
+    <div class="box ex"><div class="lab">Example 2</div>
+    <p>The following potential heuristics represent the perfect heuristic \(h^*\) of our running example:</p>
+    <p style="text-align:center">\[ h_1(s) = 3 - 2[x] - 1[y], \quad h_2(s) = 2[\overline{x}] + 1[\overline{y}], \]</p>
+    <p style="text-align:center">\[ h_3(s) = 3[\overline{x} \land \overline{y}] + 2[\overline{x} \land y] + 1[x \land \overline{y}]. \]</p>
+    </div>
+    <p>The widget below puts Examples 1 and 2 together. Pick a state of the binary counter, and watch the three representations all evaluate to \(h^*\).</p>
+  </div>
+
+<div class="widget" id="w-equiv">
+    <div class="head"><span class="wnum">1</span><h4>Three representations, one function</h4><span class="tag">interactive</span></div>
+    <div class="body">
+      <div class="grid12">
+        <div>
+          <p class="small" style="margin-top:0">Set a state by toggling the bits:</p>
+          <div class="bits">
+            <div class="bit"><span class="lbl">x</span><div class="switch" data-var="x"><span class="v0">0</span><span class="v1">1</span><span class="knob"></span></div></div>
+            <div class="bit"><span class="lbl">y</span><div class="switch" data-var="y"><span class="v0">0</span><span class="v1">1</span><span class="knob"></span></div></div>
+          </div>
+          <!-- state space -->
+          <svg viewBox="0 0 260 210" width="100%" style="margin-top:22px;max-width:300px" aria-label="state space of the binary counter">
+            <defs>
+              <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L7,3 L0,6 z" fill="var(--muted)"/>
+              </marker>
+            </defs>
+            <path class="ss-edge" d="M70,40 H150"/>
+            <path class="ss-edge" d="M168,55 L82,150"/>
+            <path class="ss-edge" d="M70,170 H150"/>
+            <g class="ss-state" data-x="0" data-y="0"><circle class="ss-node" cx="50" cy="40" r="26"/><text class="ss-label" x="50" y="44" text-anchor="middle">00</text><text class="ss-h" x="50" y="12" text-anchor="middle">3</text></g>
+            <g class="ss-state" data-x="0" data-y="1"><circle class="ss-node" cx="180" cy="40" r="26"/><text class="ss-label" x="180" y="44" text-anchor="middle">01</text><text class="ss-h" x="218" y="44" text-anchor="middle">2</text></g>
+            <g class="ss-state" data-x="1" data-y="0"><circle class="ss-node" cx="50" cy="170" r="26"/><text class="ss-label" x="50" y="174" text-anchor="middle">10</text><text class="ss-h" x="12" y="174" text-anchor="middle">1</text></g>
+            <g class="ss-state" data-x="1" data-y="1"><circle class="ss-node goal" cx="180" cy="170" r="26"/><circle cx="180" cy="170" r="30" fill="none" stroke="var(--green)" stroke-width="1.4"/><text class="ss-label" x="180" y="174" text-anchor="middle">11</text><text class="ss-h" x="180" y="208" text-anchor="middle">0</text></g>
+          </svg>
+          <p class="small">Binary counter: increment <span class="mono">00 → 01 → 10 → 11</span>. The double-circled <span class="mono">11</span> is the goal; the green number next to each state is <span class="mono">h*</span>, the number of increments left. Click a state or use the toggles.</p>
+        </div>
+        <div>
+          <div class="repcard" data-rep="h1">
+            <div class="name">h₁ = 3 − 2[x] − [y]</div>
+            <div class="calc-row"><span class="brk"></span><span class="val"></span></div>
+            <div class="calc-row total"><span>value</span><span class="res">·</span></div>
+          </div>
+          <div class="repcard" data-rep="h2">
+            <div class="name">h₂ = 2[x̄] + [ȳ]</div>
+            <div class="calc-row"><span class="brk"></span><span class="val"></span></div>
+            <div class="calc-row total"><span>value</span><span class="res">·</span></div>
+          </div>
+          <div class="repcard" data-rep="h3">
+            <div class="name">h₃ = 3[x̄ȳ] + 2[x̄y] + [xȳ]</div>
+            <div class="calc-row"><span class="brk"></span><span class="val"></span></div>
+            <div class="calc-row total"><span>value</span><span class="res">·</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="hint">All three agree in every state, so they represent the same heuristic, though their syntax gives no sign of it. Without a canonical representation, deciding whether two potential heuristics are equal, or measuring how complex one is, is not obvious.</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>For a planning task with \(|\mathcal{P}|\) state variables, an explicit representation (e.g., as a table) has size \(O(2^{|\mathcal{P}|})\). However, even when the heuristic function is given explicitly as part of the input, the problem of synthesizing it as a potential function is challenging <span class="cite">(Corr&ecirc;a and Pommerening 2019)</span>.</p>
+    <p>We therefore refer to potential functions representing heuristics simply as the <em>potential representations</em> of heuristics. This will help us in the upcoming section, when we introduce new heuristic representations.</p>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section id="polynomials">
+  <div class="sec-no">Section 3</div>
+  <h2>Heuristics as Multilinear Polynomials</h2>
+  <div class="prose">
+    <p class="lead">A <em>multilinear polynomial</em> \(f: \{0,1\}^n \to \mathbb{R}\) is a <em>real-valued Boolean function</em> that maps a vector of \(n\) Boolean values to a real value. (<em>Multilinear</em> means that terms are multivariate and no variable \(x\) occurs in a power of \(2\) or higher.) We sometimes refer to \(f\) simply as a <em>polynomial</em>, as all polynomials studied in our paper are multilinear. Our notation and definitions are based on the work by O'Donnell <span class="cite">(2014)</span>.</p>
+
+    <p>Multilinear polynomials are flexible with respect to the values for true or false. Each choice of values has benefits and drawbacks compared to the others. We usually use the classic \(0\) for false, and \(1\) for true. Other choices include \(\{-1, +1\}\), \(\{-\tfrac{1}{2}, +\tfrac{1}{2}\}\), and the field \(\mathbb{F}_2\). It is possible to convert between all these different representations by changing the basis of the function, although the specific results and methods discussed next must also be adapted <span class="cite">(O'Donnell 2014)</span>. We assume \(1/0\) for true/false, and when a different choice of true/false values is needed, we note it explicitly.</p>
+
+    <p>Let \(f\) be a real-valued Boolean function over variables \(\{x_1, \ldots, x_n\}\). Let \(S \subseteq \{x_1, \ldots, x_n\}\) be an arbitrary subset of variables. We can obtain a multilinear polynomial representation of \(f\), denoted here as \(F_f\), via <em>interpolation</em>:</p>
+    <p style="text-align:center">\[ F_f(x_1, \ldots, x_n) = \sum_{S \subseteq \{x_1, \ldots, x_n\}} f(S) \prod_{x_i \in S} x_i \prod_{x_j \notin S} (1 - x_j), \]</p>
+    <p>where \(f(S)\) is the valuation of \(f\) when \(x_i = 1\) if \(x_i \in S\), and \(x_i = 0\) otherwise.</p>
+
+    <div class="box ex"><div class="lab">Example 3</div>
+    <p>Using the interpolation method, we can compute a multilinear polynomial for \(f_{\max_2}\), the function computing the maximum between \(x\) and \(y\). Loading the <span class="mono">max(x,y)</span> preset in the calculator below yields \(F_{f_{\max_2}}(x,y) = x + y - xy\). Editing the four heuristic values recomputes the unique multilinear polynomial and its coefficients on the fly.</p>
+    </div>
+  </div>
+
+<div class="widget" id="w-fourier">
+    <div class="head"><span class="wnum">2</span><h4>Fourier expansion calculator</h4><span class="tag">edit the table</span></div>
+    <div class="body">
+      <div class="btnrow">
+        <button class="btn" data-n="2">2 variables</button>
+        <button class="btn" data-n="3">3 variables</button>
+        <span style="width:14px"></span>
+        <button class="btn" data-preset="counter">h* (counter)</button>
+        <button class="btn" data-preset="max">max(x,y)</button>
+        <button class="btn" data-preset="parity">parity x⊕y</button>
+        <button class="btn" data-preset="and3">x∧y∧z</button>
+        <button class="btn" data-preset="zero">reset to 0</button>
+      </div>
+      <div class="grid2">
+        <div>
+          <div id="tt-host"></div>
+          <p class="hint">Each row is one state. The right column holds its heuristic value.</p>
+        </div>
+        <div>
+          <div class="small mono" style="margin-bottom:4px">unique multilinear polynomial</div>
+          <div class="poly-out" id="poly-out">·</div>
+          <div style="margin-top:6px">degree <span class="deg-badge" id="deg-badge">0</span></div>
+          <table class="coef-tbl" id="coef-tbl"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>Given \(S \subseteq \{x_1, \ldots, x_n\}\), we define the <em>monomial</em> corresponding to \(S\) as \(x^S = \prod_{x_i \in S} x_i\), where \(x^{\emptyset} = 1\) by convention. We define the <em>size of a monomial</em> \(x^S\) as \(|S|\), the number of variables multiplied in \(x^S\). It is easy to see that this also corresponds to the conjunction over the variables in \(S\).</p>
+
+    <p>Every function \(f: \{0,1\}^n \to \mathbb{R}\) over \(\{x_1, \ldots, x_n\}\) can be <em>uniquely expressed as a multilinear polynomial</em></p>
+    <p style="text-align:center">\[ F_f(x_1, \ldots, x_n) = \sum_{S \subseteq \{x_1, \dots, x_n\}} \hat{f}(S)\,x^S, \]</p>
+    <p>where \(\hat{f}(S) \in \mathbb{R}\) is the <em>Fourier coefficient</em> of \(f\) on \(S\), corresponding to the coefficient of the monomial \(x^S\) in the polynomial. The polynomial \(F_f\) is called the <em>Fourier expansion of \(f\)</em> and \(\max_{S: \hat{f}(S)\neq 0} |S|\) is its <em>degree</em>.</p>
+
+    <p>Since we focus on heuristics that are real-valued Boolean functions, we can use their Fourier expansion to obtain a unique representation for them. We use the Fourier coefficient on \(S\) as the weight for the conjunction over the variables in \(S\) (and \(0\) for all other features).</p>
+
+    <div class="box ex"><div class="lab">Example 4</div>
+    <p>Let \(F_{h^*}\) be the Fourier expansion of the \(h^*\) function from Example 1. Loading the <span class="mono">h* (counter)</span> preset above computes it by interpolation:</p>
+    <p style="text-align:center">\[ h^*(s) = 3(1-x)(1-y) + 2(1-x)y + 1\,x(1-y) + 0\,xy = 3 - 2x - y = F_{h^*}(x,y). \]</p>
+    <p>This is the unique multilinear polynomial representing \(h^*\) from Example 1.</p>
+    </div>
+
+    <p>One can observe that \(F_{h^*}\) above is equivalent to the potential representation \(h_1\) from Example 2, but it is not identical to \(h_2\). This leads us to a new question: given a potential representation of a heuristic function \(h\), can we compute the Fourier expansion of \(h\)? The answer is yes. This can be done by replacing, for any variable \(x_i\), the features \([x_i]\) with the variable \(x_i\), \([\overline{x_i}]\) with the complement \((1 - x_i)\), and replacing the conjunction of features with the product of the corresponding variables and complements.</p>
+
+    <div class="box ex"><div class="lab">Example 5</div>
+    <p>Starting with \(h_1\) or \(h_2\) from our previous examples, we can compute \(F_{h^*}\) using the replacement rules just described above. From \(h_1(s) = 3 - 2[x] - 1[y]\), we obtain \(F_{h^*}\) immediately:</p>
+    <p style="text-align:center">\[ F_{h^*}(x,y) = 3 - 2x - y. \]</p>
+    <p>From \(h_2(s) = 2[\overline{x}] + 1[\overline{y}]\), we require some arithmetic:</p>
+    <p style="text-align:center">\[ F_{h^*}(x,y) = 2\cdot (1-x) + 1\cdot (1-y) = 2 - 2x + 1 - y = 3 - 2x - y. \]</p>
+    <p>The case for \(h_3\) is left as an exercise.</p>
+    </div>
+    <p>The widget below lets you carry out these conversions for any potential representation over \(x, y\), including the \(h_3\) exercise. Select a starting representation:</p>
+  </div>
+
+<div class="widget" id="w-convert">
+    <div class="head"><span class="wnum">3</span><h4>Potential Representation → Fourier expansion</h4><span class="tag">build your own</span></div>
+    <div class="body">
+      <div class="btnrow">
+        <span class="small" style="align-self:center;color:var(--muted)">quick fill:</span>
+        <button class="btn" data-fill="h1">h₁</button>
+        <button class="btn" data-fill="h2">h₂</button>
+        <button class="btn" data-fill="h3">h₃</button>
+        <button class="btn" data-fill="rand">random</button>
+        <button class="btn" data-fill="clear">clear</button>
+      </div>
+      <div id="conv-terms"></div>
+      <button class="btn" id="conv-add" style="margin:2px 0 4px">+ add term</button>
+      <div class="steps" id="conv-steps" style="margin-top:16px"></div>
+      <p class="hint">See how to derive a Fourier expansion from a potential heuristic.</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>We can also do the <em>inverse</em> replacement: given a Fourier expansion, obtain a potential representation by replacing variables \(x\) with \([x]\), and a product of variables \(x_1x_2\dots x_n\) with \([x_1 \land \dots \land x_n]\).</p>
+
+    <p>In our examples, we compute the Fourier expansion using interpolation. We can, however, use a slightly better method, based on <em>Fast Fourier Transform</em> <span class="cite">(FFT; Cooley and Tukey 1965)</span>. The interpolation can be computed in \(O(2^{2n})\) while the FFT method has \(O(n2^n)\) runtime <span class="cite">(O'Donnell 2014)</span>. We do not detail how the FFT works here, as it would involve adding another layer of definitions (e.g., complex numbers).</p>
+
+    <p>The main definitions of potential representation translate to the Fourier expansions. The dimension of a potential representation \(h\) is analogous to the degree of the Fourier expansion \(F_h\). Moreover, the degree of \(F_h\) is bounded by the dimension of \(h\): as the dimension of \(h\) is the size of its largest feature, this corresponds to the largest monomial when we apply the replacement rules described above. Similarly, the weight function used in \(h\) is equivalent to the Fourier coefficients \(\hat{h}\). The definitions of correlation complexity and optimal correlation complexity can also be translated, but now referring to the degree of the Fourier expansion instead of the dimension of a potential representation. This shifts the view from syntactic properties to semantic properties.</p>
+
+    <p>This leads us to interesting results:</p>
+  </div>
+  <div class="box prop"><div class="lab">Proposition 1</div>A potential representation \(h\) of dimension \(d\) can be converted into a Fourier expansion \(F_h\) of degree \(d\) or less.</div>
+  <div class="box prop"><div class="lab">Proposition 2</div>A Fourier expansion \(F_h\) of degree \(d\) can be converted into a potential representation of dimension \(d\).</div>
+  <div class="prose">
+    <p>Note that the dimension of \(h\) is a property of the potential representation \(h\) but <em>the degree of a Fourier expansion is a property of the function</em>. In other words, different potential representations \(h_1, \dots, h_n\) can synthesize the same heuristic \(h\) despite having different dimensions, but the degree of the Fourier expansion \(F_h\) is uniquely defined by \(h\).</p>
+    <p>Given our replacement rules, these two propositions are not surprising. However, this brings a more subtle result about potential representations:</p>
+  </div>
+  <div class="box prop"><div class="lab">Proposition 3</div>Given a potential representation \(h\) of dimension \(\textit{dim}(h)\), there exists a potential representation \(h'\) with dimension \(\textit{dim}(h') \leq \textit{dim}(h)\) where all features (with non-zero weights) use only positive literals.</div>
+  <div class="prose">
+    <p>This follows directly from the replacement rules presented above. Given a potential representation \(h\), we can "eliminate" features with negative literals as follows: convert to a Fourier expansion using the corresponding replacement rules, then convert back to a new potential representation using the replacement rule in the reverse direction. This gives a new potential representation without negative literals &mdash; since whenever we replace variables from the Fourier expansion, we only replace them with features containing positive literals &mdash; while preserving the dimension of the original function.</p>
+    <p>Due to symmetry, Proposition 3 also holds for using only negative literals (as in \(h_2\)), or any other parity choice per variable in which it is allowed to appear in the features. However, the number of non-zero weights could drastically change. In an extreme case, the function is constant \(0\) except for one input. If this input matches the parity choice, then a single feature is sufficient, otherwise \(2^{|\mathcal{P}|}\) features are required. The size of the largest feature does not change. Any parity choice for the features results in the same dimension.</p>
+    <p>It is often desirable to express the planning problem with a finite domain representation, such as SAS\(^+\) <span class="cite">(B&auml;ckstr&ouml;m and Nebel 1995)</span>, instead of propositional variables. Here, a state is a full assignment for each variable \(v\) to their domains and a feature of size \(d\) is a partial assignment for \(d\) variables. Each domain can be represented as \(\textit{dom}(v)=\{1,2,\dots,|\textit{dom}(v)|\}\). We say a feature \(f\) is true in a state \(s\) if \(f\) is a restriction of the full assignment \(s\), for example \([x=1,y=3]\) has value 1 iff \(s(x)=1\) and \(s(y)=3\). For this view we get an analogous result to Proposition 3.</p>
+  </div>
+  <div class="box prop"><div class="lab">Proposition 4</div>Given a potential representation \(h\) of dimension \(\textit{dim}(h)\), there exists a potential representation \(h'\) with dimension \(\textit{dim}(h') \leq \textit{dim}(h)\) and where no features (with non-zero weights) map any variable to domain value \(1\).</div>
+  <div class="prose">
+    <p>We create such a representation by rewriting features in Iverson brackets to a product of size 1 features. For example, \([x=1, y=3]\) becomes \([x = 1]\cdot[y = 3]\). Then, we replace \([x=1]\) with \((1-[x=2]-\dots-[x=|\textit{dom}(x)|])\) to remove all features that map to 1. After this representation shift, we use arithmetic to get a sum of products of size 1 features which we rewrite to larger features. None of these products has more factors than the ones we started with. Thus, the dimension of the created representation is not larger.</p>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section id="relevance">
+  <div class="sec-no">Section 4</div>
+  <h2>Final Thoughts: Why Is This Relevant?</h2>
+  <div class="prose">
+    <p class="lead">Fourier expansions allow us to have a unique representation for any heuristic function. But is this of any use? We survey some interesting results, properties, and improvements that come naturally once we think of potential functions as multilinear polynomials.</p>
+    <p>There are two different scenarios where the Fourier expansion can be useful. First, when we have the Fourier expansion at hand, we can <em>analytically</em> infer different properties of the heuristic. Second, when we have access only to some states and their heuristic values (e.g., in a learning setting, where we can obtain only some states), we can estimate with high confidence different properties of the Fourier expansion with a low number of queries.</p>
+
+    <h3>The Basics</h3>
+    <p>The simplest information we can obtain directly from a Fourier expansion heuristic \(F_h\) is its <em>mean value</em>, denoted by \(\mathbb{E}[F_h]\). This corresponds to the average heuristic values over all states. For the next two propositions, we consider Fourier expansions \(F_h: \{-1,+1\}^n \to \mathbb{R}\) where \(-1\) and \(+1\) represent false and true. As mentioned before, we can convert the traditional \(\{0,1\}\) representation to this new basis without problems <span class="cite">(O'Donnell 2014)</span>.</p>
+  </div>
+  <div class="box prop"><div class="lab">Proposition (mean)</div>Let \(F_h\) be a Fourier expansion heuristic, then \(\mathbb{E}[F_h] = \hat{h}(\emptyset)\). In other words, the mean of \(F_h\) is the constant coefficient of the function.</div>
+  <div class="prose">
+    <p>We can also infer the variance of the heuristic value distribution directly from the Fourier expansion:</p>
+  </div>
+  <div class="box prop"><div class="lab">Proposition (variance)</div>Let \(F_h\) be a Fourier expansion heuristic. The <em>variance</em> of \(F_h\) is \(\mathbf{Var}[F_h] = \sum_{S \neq \emptyset} \hat{h}(S)^2\).</div>
+  <div class="prose">
+    <p>The widget below compares two heuristics on the four states of the running example. With the means held equal, it shows how the variance, read off as \(\sum_{S\neq\emptyset}\hat{h}(S)^2\), changes with the value distribution.</p>
+  </div>
+
+<div class="widget" id="w-stats">
+    <div class="head"><span class="wnum">4</span><h4>Same mean, different variance</h4><span class="tag">two heuristics</span></div>
+    <div class="body">
+      <div class="grid2" id="stats-grid"></div>
+      <p class="hint">Variance is computed in two ways that agree: directly from the values, and as <span class="mono">Σ_{S≠∅} ĥ(S)²</span> over the ±1 Fourier coefficients. Their equality is Parseval's identity, which underlies the proposition.</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>Knowing the mean and the variance of a heuristic function can give us insight into how algorithms such as A\(^*\) and IDA\(^*\) should perform in this task. Holte et al. <span class="cite">(2006)</span> empirically show that if two heuristics have the same average value, then the one with heuristic values more concentrated around the mean is expected to perform better. Moreover, the distribution of heuristic values can be used to analyze the expected number of expansions in different search algorithms <span class="cite">(Korf 1997; Korf et al. 2001; Holte 2013)</span>.</p>
+    <p>With the Fourier expansion heuristics, we can do these inferences analytically, without having to know the entire state space. This becomes useful when we generate different heuristic functions (either potential heuristics or Fourier expansion heuristics) and want to estimate which one is best.</p>
+
+    <h3>Learning Heuristics</h3>
+    <p>A Fourier coefficient can be interpreted as a measure of how relevant the feature/term is. If this relevance is concentrated on a small collection \(\mathcal{C}\) of terms, we can efficiently learn the function.</p>
+    <p>Let \(\mathcal{C}\) be a collection of subsets of \(\{x_1, \dots, x_n\}\). We say a real-valued Boolean function \(f\) is <em>\(\epsilon\)-concentrated</em> on \(\mathcal{C}\) if</p>
+    <p style="text-align:center">\[ \sum_{S \notin \mathcal{C}} \hat{f}(S)^2 \leq \epsilon. \]</p>
+    <p>In words: the Fourier coefficients for terms <em>not in</em> \(\mathcal{C}\) do not contribute much to the function. Drag the threshold below to keep only the heaviest terms and watch the leftover weight \(\epsilon\).</p>
+  </div>
+
+<div class="widget" id="w-concentration">
+      <div class="head"><span class="wnum">5</span><h4>Learning a heuristic from its main features</h4><span class="tag">keep the top terms</span></div>
+      <div class="body">
+        <div class="btnrow">
+          <span class="small" style="align-self:center;color:var(--muted)">target heuristic over 4 bits <span class="mono">a,b,c,d</span>:</span>
+          <button class="btn sel" data-fn="counter">4-bit counter</button>
+          <button class="btn" data-fn="coupled">counter + interactions</button>
+          <button class="btn" data-fn="spread">mixed task</button>
+        </div>
+        <div class="small mono" style="margin-top:6px;color:var(--muted)">target heuristic h (its full Fourier expansion)</div>
+        <div class="poly-out" id="conc-target" style="font-size:19px">·</div>
+        <div style="margin-top:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <label class="small mono">keep the <span id="keep-n">3</span> largest-weight features
+            <input type="range" id="spec-slider" min="1" max="16" value="3" style="vertical-align:middle;width:190px">
+          </label>
+        </div>
+        <div class="small mono" style="margin-top:14px;color:var(--muted)">learned heuristic g (kept features only)</div>
+        <div class="poly-out" id="conc-learned" style="font-size:19px">·</div>
+        <div class="stat" style="margin-top:16px">
+          <div class="s"><div class="k">features kept</div><div class="v" id="kept-val">·</div></div>
+          <div class="s"><div class="k">dimension of g</div><div class="v" id="dim-val">·</div></div>
+          <div class="s"><div class="k">largest error</div><div class="v" id="maxerr-val" style="color:var(--accent)">·</div></div>
+          <div class="s"><div class="k">average error</div><div class="v" id="avgerr-val">·</div></div>
+        </div>
+      </div>
+    </div>
+
+  <div class="prose">
+    <p>For a heuristic \(h\) that is \(\epsilon\)-concentrated on \(\mathcal{C}\), we can learn an approximation of \(h\) to an accuracy \(O(\epsilon)\) with probability at least \(1 - \delta\) in time \(\mathrm{poly}(|\mathcal{C}|, 1/\epsilon)\,\mathrm{poly}(n)\,\log(1/\delta)\) with the use of <em>membership queries</em> <span class="cite">(Kushilevitz and Mansour 1991)</span>. Additionally, if \(\mathcal{C}\) only contains subsets with at most \(d\) variables (i.e., the most significant weights are in features of degree at most \(d\)) then <em>random queries</em> suffice <span class="cite">(Linial et al. 1993)</span>.</p>
+    <p>Note that this result is consistent with previous work that showed that \(h^*\) can be approximated well using only a few features with significant weights <span class="cite">(Corr&ecirc;a and Pommerening 2019)</span>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="padding:0">
+    <h3>Acknowledgments</h3>
+    <p>This research was supported by the Swiss National Science Foundation (SNSF) as part of the project "Unifying the Theory and Algorithms of Factored State-Space Search" (UTA).</p>
+    <h3>About this page</h3>
+    <p>This is an interactive companion to <em>"Potential Heuristics as Real-Valued Multilinear Polynomials"</em> by Augusto B. Corr&ecirc;a, Simon Dold, and Malte Helmert (ICAPS 2026). The prose reproduces the paper's text; the worked examples are replaced by the interactive widgets above (numbered 1&ndash;5). For all citations, proofs, and full references, see the paper itself.</p>
+  </div>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =====================================================================
+   Helpers
+   ===================================================================== */
+function fmt(v){
+  if(Math.abs(v) < 1e-9) return "0";
+  let r = Math.round(v*1e6)/1e6;
+  if(Math.abs(r - Math.round(r)) < 1e-9) return String(Math.round(r));
+  return String(r);
+}
+function popcount(m){let c=0;while(m){c+=m&1;m>>=1;}return c;}
+/* iterate submasks of m */
+function submasks(m){
+  const out=[];
+  for(let t=m;;t=(t-1)&m){ out.push(t); if(t===0) break; }
+  return out;
+}
+
+/* =====================================================================
+   Widget 1 — equivalent representations + state space
+   ===================================================================== */
+(function(){
+  const root = document.getElementById('w-equiv');
+  const state = {x:0,y:0};
+
+  function reps(x,y){
+    // returns {breakdown, total} for each
+    const h1 = {
+      terms:[['3',3],['−2[x]', -2*x],['−[y]', -1*y]],
+      total: 3 - 2*x - y
+    };
+    const h2 = {
+      terms:[['2[x̄]', 2*(1-x)],['[ȳ]', (1-y)]],
+      total: 2*(1-x) + (1-y)
+    };
+    const h3 = {
+      terms:[['3[x̄ȳ]', 3*((1-x)*(1-y))],['2[x̄y]', 2*((1-x)*y)],['[xȳ]', (x*(1-y))]],
+      total: 3*((1-x)*(1-y)) + 2*((1-x)*y) + 1*(x*(1-y))
+    };
+    return {h1,h2,h3};
+  }
+
+  function render(){
+    const {x,y}=state;
+    const r = reps(x,y);
+    // h* for reference is r.h1.total (all equal)
+    ['h1','h2','h3'].forEach(id=>{
+      const card = root.querySelector(`.repcard[data-rep="${id}"]`);
+      const data = r[id];
+      const brk = data.terms.map(t=>{
+        const on = Math.abs(t[1])>1e-9;
+        return `<span style="opacity:${on?1:.4};background:#fff8;border:1px solid var(--line);border-radius:6px;padding:2px 8px;white-space:nowrap;display:inline-block;margin:2px 4px 2px 0">${t[0]} = ${fmt(t[1])}</span>`;
+      }).join('');
+      card.querySelector('.brk').innerHTML = brk;
+      const res = card.querySelector('.res');
+      res.textContent = fmt(data.total);
+      res.classList.add('match');
+    });
+    // toggles
+    root.querySelectorAll('.switch').forEach(sw=>{
+      const v = state[sw.dataset.var];
+      sw.classList.toggle('on', v===1);
+    });
+    // state space highlight
+    root.querySelectorAll('.ss-state').forEach(g=>{
+      const active = (+g.dataset.x===x && +g.dataset.y===y);
+      g.querySelector('.ss-node').classList.toggle('active', active);
+      const lbl = g.querySelector('.ss-label');
+      lbl.style.fill = active ? '#fff' : 'var(--ink)';
+    });
+  }
+
+  root.querySelectorAll('.switch').forEach(sw=>{
+    sw.addEventListener('click',()=>{
+      const v = sw.dataset.var;
+      state[v] = state[v]?0:1;
+      render();
+    });
+  });
+  root.querySelectorAll('.ss-state').forEach(g=>{
+    g.addEventListener('click',()=>{
+      state.x = +g.dataset.x; state.y = +g.dataset.y; render();
+    });
+  });
+  render();
+})();
+
+/* =====================================================================
+   Widget 2 — Fourier expansion calculator
+   ===================================================================== */
+(function(){
+  const root = document.getElementById('w-fourier');
+  let n = 2;
+  let h = [];               // truth table indexed by state mask
+  const varNames = ['x','y','z'];
+
+  const presets = {
+    counter: {n:2, vals:[3,2,1,0]},        // 00,01,10,11  (idx bit0=x msb? see ordering below)
+    max:     {n:2, vals:[0,1,1,1]},
+    parity:  {n:2, vals:[0,1,1,0]},
+    and3:    {n:3, vals:[0,0,0,0,0,0,0,1]},
+    zero2:   {n:2, vals:[0,0,0,0]},
+    zero3:   {n:3, vals:[0,0,0,0,0,0,0,0]},
+  };
+
+  /* state ordering: idx in 0..2^n-1, bit (n-1-i) is variable i.
+     So for n=2: idx0=00(x=0,y=0), idx1=01(x=0,y=1), idx2=10, idx3=11.
+     variable i value = (idx >> (n-1-i)) & 1   -> matches reading idx as x y z. */
+  function varVal(idx,i){ return (idx >> (n-1-i)) & 1; }
+
+  function setN(newN, vals){
+    n = newN;
+    h = vals ? vals.slice() : new Array(1<<n).fill(0);
+    buildTable();
+    compute();
+    root.querySelectorAll('[data-n]').forEach(b=>b.classList.toggle('sel', +b.dataset.n===n));
+  }
+
+  function buildTable(){
+    const host = document.getElementById('tt-host');
+    let html = '<table class="tt"><tr>';
+    for(let i=0;i<n;i++) html += `<th>${varNames[i]}</th>`;
+    html += '<th>h(state)</th></tr>';
+    for(let idx=0; idx<(1<<n); idx++){
+      html += '<tr>';
+      for(let i=0;i<n;i++) html += `<td>${varVal(idx,i)}</td>`;
+      html += `<td><input type="number" step="1" data-idx="${idx}" value="${h[idx]}"></td>`;
+      html += '</tr>';
+    }
+    html += '</table>';
+    host.innerHTML = html;
+    host.querySelectorAll('input').forEach(inp=>{
+      inp.addEventListener('input',()=>{
+        const v = parseFloat(inp.value);
+        h[+inp.dataset.idx] = isNaN(v)?0:v;
+        compute();
+      });
+    });
+  }
+
+  /* Moebius inversion to the {0,1} monomial basis.
+     For subset mask S (over variables, bit i = variable i present),
+     coeff(S) = sum_{T subseteq S} (-1)^{|S|-|T|} f(stateOf(T))
+     where stateOf(T) is the state with variable i = 1 iff i in T. */
+  function stateOfVarset(vmask){
+    let idx=0;
+    for(let i=0;i<n;i++){ if((vmask>>i)&1) idx |= (1<<(n-1-i)); }
+    return idx;
+  }
+  function monoLabel(vmask){
+    if(vmask===0) return '1';
+    let s='';
+    for(let i=0;i<n;i++) if((vmask>>i)&1) s+=varNames[i];
+    return s;
+  }
+  function compute(){
+    const coeffs = []; // {mask, val, deg}
+    let degree = 0;
+    for(let S=0; S<(1<<n); S++){
+      let c=0;
+      const sm = submasks(S);
+      const sS = popcount(S);
+      for(const T of sm){
+        const sign = ((sS - popcount(T))%2===0)?1:-1;
+        c += sign * h[stateOfVarset(T)];
+      }
+      c = Math.round(c*1e6)/1e6;
+      coeffs.push({mask:S, val:c, deg:popcount(S)});
+      if(Math.abs(c)>1e-9) degree = Math.max(degree, popcount(S));
+    }
+    renderPoly(coeffs, degree);
+    renderCoefTable(coeffs);
+  }
+
+  function renderPoly(coeffs, degree){
+    // sort by degree then mask
+    const nz = coeffs.filter(c=>Math.abs(c.val)>1e-9)
+                     .sort((a,b)=> a.deg-b.deg || a.mask-b.mask);
+    const out = document.getElementById('poly-out');
+    if(nz.length===0){ out.textContent = '0'; }
+    else{
+      let html='';
+      nz.forEach((c,i)=>{
+        const a = c.val;
+        const lab = monoLabel(c.mask);
+        const mono = (c.mask===0) ? '' :
+          ('<var>'+lab.split('').join('</var><var>')+'</var>');
+        let coefStr;
+        if(c.mask===0){ coefStr = `<span class="c">${fmt(Math.abs(a))}</span>`; }
+        else if(Math.abs(Math.abs(a)-1)<1e-9){ coefStr=''; }
+        else { coefStr = `<span class="c">${fmt(Math.abs(a))}</span>`; }
+        const sign = a<0 ? '−' : (i===0?'':'+');
+        html += (i===0 ? (a<0?'− ':'') : ` ${sign} `) + coefStr + mono;
+      });
+      // fix first-term spacing
+      out.innerHTML = html.trim();
+    }
+    document.getElementById('deg-badge').textContent = degree;
+  }
+
+  function renderCoefTable(coeffs){
+    const t = document.getElementById('coef-tbl');
+    let html = '<tr><th>feature x^S</th><th>coefficient ĥ(S)</th></tr>';
+    coeffs.sort((a,b)=> a.deg-b.deg || a.mask-b.mask).forEach(c=>{
+      const lab = monoLabel(c.mask);
+      const mono = c.mask===0 ? '1' : '<var>'+lab.split('').join('</var><var>')+'</var>';
+      const zero = Math.abs(c.val)<1e-9;
+      html += `<tr><td class="mono-cell ${zero?'zero':''}">${mono}</td>`+
+              `<td class="${zero?'zero':''}">${fmt(c.val)}</td></tr>`;
+    });
+    t.innerHTML = html;
+  }
+
+  // buttons
+  root.querySelectorAll('[data-n]').forEach(b=>{
+    b.addEventListener('click',()=> setN(+b.dataset.n, +b.dataset.n===2?presets.counter.vals:presets.and3.vals));
+  });
+  root.querySelectorAll('[data-preset]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const p = b.dataset.preset;
+      if(p==='counter') setN(2, presets.counter.vals);
+      else if(p==='max') setN(2, presets.max.vals);
+      else if(p==='parity') setN(2, presets.parity.vals);
+      else if(p==='and3') setN(3, presets.and3.vals);
+      else if(p==='zero') setN(n, new Array(1<<n).fill(0));
+    });
+  });
+
+  setN(2, presets.counter.vals);
+})();
+
+/* =====================================================================
+   Widget 3 — free-form potential heuristic -> Fourier expansion
+   ===================================================================== */
+(function(){
+  const root  = document.getElementById('w-convert');
+  const host  = document.getElementById('conv-terms');
+  const steps = document.getElementById('conv-steps');
+
+  // features over {x,y}: bracket label, product form, monomial vector [1,x,y,xy]
+  const FEAT = {
+    one:  {label:'1',         prod:'1',           v:[1,0,0,0]},
+    x:    {label:'[x]',       prod:'x',           v:[0,1,0,0]},
+    nx:   {label:'[x̄]',      prod:'(1−x)',       v:[1,-1,0,0]},
+    y:    {label:'[y]',       prod:'y',           v:[0,0,1,0]},
+    ny:   {label:'[ȳ]',      prod:'(1−y)',       v:[1,0,-1,0]},
+    xy:   {label:'[x∧y]',     prod:'xy',          v:[0,0,0,1]},
+    xny:  {label:'[x∧ȳ]',    prod:'x(1−y)',      v:[0,1,0,-1]},
+    nxy:  {label:'[x̄∧y]',    prod:'(1−x)y',      v:[0,0,1,-1]},
+    nxny: {label:'[x̄∧ȳ]',   prod:'(1−x)(1−y)',  v:[1,-1,-1,1]}
+  };
+  const ORDER = ['one','x','nx','y','ny','xy','xny','nxy','nxny'];
+  const dimOf = f => f==='one' ? 0 : (['xy','xny','nxy','nxny'].includes(f) ? 2 : 1);
+  const labs4 = ['','x','y','xy'];
+
+  const presets = {
+    h1: [[3,'one'],[-2,'x'],[-1,'y']],
+    h2: [[2,'nx'],[1,'ny']],
+    h3: [[3,'nxny'],[2,'nxy'],[1,'xny']]
+  };
+  let terms = presets.h1.map(([w,f])=>({w,f}));
+
+  // render a list of {a, j} signed monomials (j: 0=1,1=x,2=y,3=xy) as HTML
+  function termsHTML(list){
+    if(!list.length) return '0';
+    let html='';
+    list.forEach((it,i)=>{
+      const mono = it.j===0 ? '' : '<var>'+labs4[it.j].split('').join('</var><var>')+'</var>';
+      const coef = (it.j!==0 && Math.abs(Math.abs(it.a)-1)<1e-9) ? '' : fmt(Math.abs(it.a));
+      const sign = it.a<0 ? '−' : (i===0?'':'+');
+      html += (i===0 ? (it.a<0?'− ':'') : ' '+sign+' ') + coef + mono;
+    });
+    return html;
+  }
+  // generic "Σ wᵢ · BODYᵢ" with leading signs
+  function sumHTML(bodyFn){
+    if(!terms.length) return '0';
+    let html='';
+    terms.forEach((t,i)=>{
+      const sign = t.w<0 ? '−' : (i===0?'':'+');
+      html += (i===0 ? (t.w<0?'− ':'') : ' '+sign+' ') + bodyFn(t, Math.abs(t.w));
+    });
+    return html;
+  }
+  const absCoef = (w,suppressable)=> (suppressable && Math.abs(Math.abs(w)-1)<1e-9) ? '' : fmt(Math.abs(w));
+
+  function bracketSum(){ return sumHTML((t,aw)=> t.f==='one' ? fmt(aw) : absCoef(t.w,true)+FEAT[t.f].label ); }
+  function prodSum(){ return sumHTML((t,aw)=>{ const p=FEAT[t.f].prod; return p==='1'? fmt(aw) : absCoef(t.w,true)+p; }); }
+  function expandSum(){            // distribute weights into monomials, keep terms uncollected
+    const segs=[];
+    terms.forEach(t=>{ const fv=FEAT[t.f].v; for(let j=0;j<4;j++){ const a=Math.round(t.w*fv[j]*1e6)/1e6; if(Math.abs(a)>1e-9) segs.push({a,j}); } });
+    return termsHTML(segs);
+  }
+  function collected(){            // sum vectors, then list nonzero monomials
+    const v=[0,0,0,0]; terms.forEach(t=>{ for(let j=0;j<4;j++) v[j]+=t.w*FEAT[t.f].v[j]; });
+    const list=[]; for(let j=0;j<4;j++){ const a=Math.round(v[j]*1e6)/1e6; if(Math.abs(a)>1e-9) list.push({a,j}); }
+    return {html: termsHTML(list), v};
+  }
+
+  function renderTerms(){
+    host.innerHTML = terms.map((t,i)=>{
+      const opts = ORDER.map(k=>`<option value="${k}" ${k===t.f?'selected':''}>${FEAT[k].label}</option>`).join('');
+      return `<div class="term-row">
+        <input type="number" step="1" data-i="${i}" data-k="w" value="${t.w}">
+        <span class="mono" style="color:var(--muted)">×</span>
+        <select data-i="${i}">${opts}</select>
+        <button class="btn xrm" data-i="${i}" title="remove term">✕</button>
+      </div>`;
+    }).join('') || '<p class="small" style="color:var(--muted)">no terms — the heuristic is 0</p>';
+    host.querySelectorAll('input[data-k="w"]').forEach(inp=>inp.addEventListener('input',()=>{
+      terms[+inp.dataset.i].w = parseFloat(inp.value)||0; derive();
+    }));
+    host.querySelectorAll('select').forEach(sel=>sel.addEventListener('change',()=>{
+      terms[+sel.dataset.i].f = sel.value; derive();
+    }));
+    host.querySelectorAll('.xrm').forEach(b=>b.addEventListener('click',()=>{
+      terms.splice(+b.dataset.i,1); renderTerms(); derive();
+    }));
+  }
+
+  function derive(){
+    const col = collected();
+    const degree = Math.abs(col.v[3])>1e-9 ? 2 : ((Math.abs(col.v[1])>1e-9||Math.abs(col.v[2])>1e-9)?1:0);
+    const dim = terms.reduce((m,t)=> Math.abs(t.w)>1e-9 ? Math.max(m,dimOf(t.f)) : m, 0);
+
+    const seq = [['h(s)',bracketSum()],['substitute',prodSum()],['expand',expandSum()]];
+    const strip = s => s.replace(/<[^>]+>/g,'');
+    let prev=null; const lines=[];
+    seq.forEach(([lab,txt],i)=>{
+      if(i===0 || strip(txt)!==strip(prev)){ lines.push(`<div class="s"><span class="op">${lab}</span>&nbsp; = ${txt}</div>`); prev=txt; }
+    });
+    lines.push(`<div class="s" style="color:var(--green);font-weight:600;font-size:17px;margin-top:4px">F&nbsp; = ${col.html}</div>`);
+    const note = dim>degree ? `dimension ${dim} in, degree ${degree} out — the terms with highest degree cancel out`
+                            : `dimension ${dim} = degree ${degree}`;
+    lines.push(`<div class="s" style="color:var(--muted);font-style:italic">${note}</div>`);
+    steps.innerHTML = lines.join('');
+  }
+
+  function load(arr){ terms = arr.map(([w,f])=>({w,f})); renderTerms(); derive(); }
+
+  root.querySelectorAll('[data-fill]').forEach(b=>b.addEventListener('click',()=>{
+    const f=b.dataset.fill;
+    if(f==='clear') load([]);
+    else if(f==='rand'){
+      const m=2+Math.floor(Math.random()*3); const t=[];
+      for(let i=0;i<m;i++){ let w=Math.floor(Math.random()*7)-3; if(w===0) w=2; t.push([w, ORDER[Math.floor(Math.random()*ORDER.length)]]); }
+      load(t);
+    } else load(presets[f]);
+  }));
+  document.getElementById('conv-add').addEventListener('click',()=>{ terms.push({w:1,f:'x'}); renderTerms(); derive(); });
+
+  renderTerms(); derive();
+})();
+
+/* =====================================================================
+   Widget 4 — mean / variance comparison (±1 basis)
+   ===================================================================== */
+(function(){
+  const root = document.getElementById('w-stats');
+  const stateLabels = ['00','01','10','11'];
+  // two heuristics over the 4-state space, same mean 1.5
+  const H = {
+    A: [3,2,1,0],   // the counter h*  -> var 1.25
+    B: [3,3,0,0]    // same mean, higher var 2.25
+  };
+
+  // ±1 Fourier coefficients for n=2; variance = sum_{S!=0} fhat(S)^2
+  function pm(bit){ return bit? -1 : 1; } // map 0->+1, 1->-1 (O'Donnell convention; sign irrelevant for var)
+  function analyse(vals){
+    // states idx: 0=00,1=01,2=10,3=11 with var i value = (idx>>(1-i))&1
+    const N=4;
+    const mean = vals.reduce((a,b)=>a+b,0)/N;
+    // population variance directly
+    const varDirect = vals.reduce((a,b)=>a+(b-mean)*(b-mean),0)/N;
+    // via fourier (+-1)
+    const coeffs = {};
+    for(let S=0;S<4;S++){
+      let c=0;
+      for(let idx=0; idx<4; idx++){
+        let chi=1;
+        for(let i=0;i<2;i++){ if((S>>i)&1){ const b=(idx>>(1-i))&1; chi*=pm(b);} }
+        c += vals[idx]*chi;
+      }
+      coeffs[S]=c/4;
+    }
+    let varF=0; for(let S=1;S<4;S++) varF += coeffs[S]*coeffs[S];
+    return {mean, varDirect, varF, coeffs, vals};
+  }
+
+  // ±1 Fourier expansion as HTML (coeffs[S]: S=1->x, 2->y, 3->xy; vars in {-1,+1})
+  function pmExpansion(coeffs){
+    const labs={0:'',1:'x',2:'y',3:'xy'}; const out=[];
+    [0,1,2,3].forEach(S=>{ const a=Math.round(coeffs[S]*1e6)/1e6; if(Math.abs(a)>1e-9) out.push({a,S}); });
+    if(!out.length) return '0';
+    let html='';
+    out.forEach((it,i)=>{
+      const mono = it.S===0 ? '' : '<var>'+labs[it.S].split('').join('</var><var>')+'</var>';
+      const coef = (it.S!==0 && Math.abs(Math.abs(it.a)-1)<1e-9) ? '' : fmt(Math.abs(it.a));
+      const sign = it.a<0 ? '−' : (i===0?'':'+');
+      html += (i===0 ? (it.a<0?'− ':'') : ' '+sign+' ') + coef + mono;
+    });
+    return html;
+  }
+
+  function panel(name, A){
+    return `
+      <div class="repcard">
+        <div class="name">heuristic ${name}</div>
+        <table class="tt" style="margin:8px 0">
+          <tr><th>x</th><th>y</th><th>value</th></tr>
+          ${A.vals.map((v,idx)=>{
+            const x=(idx>>1)&1, y=idx&1;
+            return `<tr><td>${x?'−1':'+1'}</td><td>${y?'−1':'+1'}</td><td><input type="number" step="1" data-h="${name}" data-idx="${idx}" value="${v}"></td></tr>`;
+          }).join('')}
+        </table>
+        <div class="small mono" style="margin-top:18px;color:var(--muted)">Fourier expansion <span style="font-style:normal">(±1 basis: x,y ∈ {−1,+1})</span></div>
+        <div class="poly-out" style="font-size:18px;padding:11px 14px;margin-top:4px">F = ${pmExpansion(A.coeffs)}</div>
+        <div class="stat" style="margin-top:14px">
+          <div class="s"><div class="k">mean = ĥ(∅), the constant</div><div class="v">${fmt(A.mean)}</div></div>
+          <div class="s"><div class="k">variance = Σ squared coeffs</div><div class="v">${fmt(A.varF)}</div></div>
+        </div>
+      </div>`;
+  }
+
+  function render(){
+    const a = analyse(H.A), b = analyse(H.B);
+    document.getElementById('stats-grid').innerHTML = panel('A', a) + panel('B', b);
+    // wire inputs
+    document.querySelectorAll('#stats-grid input').forEach(inp=>{
+      inp.addEventListener('input',()=>{
+        const val=parseFloat(inp.value);
+        H[inp.dataset.h][+inp.dataset.idx]= isNaN(val)?0:val;
+        render();
+      });
+    });
+  }
+  render();
+})();
+
+/* =====================================================================
+   Widget 5 — learning a heuristic from its main features
+   target h and learned g shown as potential heuristics ({0,1} basis)
+   ===================================================================== */
+(function(){
+  const VARS=['a','b','c','d'], n=4, N=16;
+  const fns = {
+    counter:(a,b,c,d)=> 15-(8*a+4*b+2*c+d),
+    coupled:(a,b,c,d)=> 15-(8*a+4*b+2*c+d) + 3*(a&&d?1:0) + 2*(b&&c?1:0),
+    spread: (a,b,c,d)=> 9 - 3*a - 2*b - 2*c - d + 2*(a&&b?1:0) - 2*(c&&d?1:0) + (a&&c?1:0)
+  };
+  let cur='counter';
+  const root   = document.getElementById('w-concentration');
+  const slider = document.getElementById('spec-slider');
+
+  function table(fn){ const t=[]; for(let idx=0;idx<N;idx++){ const a=(idx>>3)&1,b=(idx>>2)&1,c=(idx>>1)&1,d=idx&1; t[idx]=fn(a,b,c,d);} return t; }
+  // {0,1} monomial-basis (potential-heuristic) coefficients via Moebius inversion
+  function coeffs01(vals){
+    const stateOf=vmask=>{ let idx=0; for(let i=0;i<n;i++){ if((vmask>>i)&1) idx|=(1<<(n-1-i)); } return idx; };
+    const co=[];
+    for(let S=0;S<N;S++){ let c=0; const sS=popcount(S); for(const T of submasks(S)){ const sign=((sS-popcount(T))%2===0)?1:-1; c+=sign*vals[stateOf(T)]; } co[S]=Math.round(c*1e6)/1e6; }
+    return co;
+  }
+  const degOf=S=>popcount(S);
+  const labelOf=S=>{ let s=''; for(let i=0;i<n;i++) if((S>>i)&1) s+=VARS[i]; return s; };
+  const monoHTML=S=> S===0?'':'<var>'+labelOf(S).split('').join('</var><var>')+'</var>';
+
+  function polyHTML(list){            // list of {S,a}
+    const nz=list.filter(o=>Math.abs(o.a)>1e-9).sort((x,y)=> degOf(x.S)-degOf(y.S) || x.S-y.S);
+    if(!nz.length) return '0';
+    let html='';
+    nz.forEach((o,i)=>{
+      const mono = o.S===0 ? '' : monoHTML(o.S);
+      const coef = (o.S!==0 && Math.abs(Math.abs(o.a)-1)<1e-9) ? '' : fmt(Math.abs(o.a));
+      const sign = o.a<0 ? '−' : (i===0?'':'+');
+      html += (i===0 ? (o.a<0?'− ':'') : ' '+sign+' ') + coef + mono;
+    });
+    return html;
+  }
+  function evalPoly(co, idx){
+    let val=0;
+    for(let S=0;S<N;S++){ if(Math.abs(co[S])<1e-9) continue; let m=1; for(let i=0;i<n;i++){ if((S>>i)&1) m*=(idx>>(n-1-i))&1; } val+=co[S]*m; }
+    return val;
+  }
+
+  function render(){
+    const co=coeffs01(table(fns[cur]));
+    const items=[]; for(let S=0;S<N;S++) if(Math.abs(co[S])>1e-9) items.push({S, a:co[S]});
+    const nNZ=items.length;
+    slider.max=nNZ;
+    let k=+slider.value; if(k>nNZ){ k=nNZ; slider.value=nNZ; }
+
+    document.getElementById('conc-target').innerHTML = 'h = '+polyHTML(items);
+
+    const kept=items.slice().sort((x,y)=> Math.abs(y.a)-Math.abs(x.a) || degOf(x.S)-degOf(y.S)).slice(0,k);
+    const keptCo=new Array(N).fill(0); kept.forEach(o=> keptCo[o.S]=o.a);
+    document.getElementById('conc-learned').innerHTML = 'g = '+polyHTML(kept);
+
+    let maxe=0, sume=0;
+    for(let idx=0;idx<N;idx++){ const e=Math.abs(evalPoly(co,idx)-evalPoly(keptCo,idx)); if(e>maxe) maxe=e; sume+=e; }
+    let dim=0; kept.forEach(o=>{ if(o.S!==0) dim=Math.max(dim,degOf(o.S)); });
+
+    document.getElementById('keep-n').textContent=k;
+    document.getElementById('kept-val').textContent=k;
+    document.getElementById('dim-val').textContent=dim;
+    document.getElementById('maxerr-val').textContent=fmt(Math.round(maxe*1000)/1000);
+    document.getElementById('avgerr-val').textContent=fmt(Math.round(sume/N*1000)/1000);
+  }
+
+  root.querySelectorAll('[data-fn]').forEach(b=>b.addEventListener('click',()=>{
+    cur=b.dataset.fn;
+    root.querySelectorAll('[data-fn]').forEach(x=>x.classList.toggle('sel', x===b));
+    render();
+  }));
+  slider.addEventListener('input',render);
+  render();
+})();
+
+/* =====================================================================
+   reading progress
+   ===================================================================== */
+(function(){
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll',()=>{
+    const h = document.documentElement;
+    const sc = h.scrollTop/(h.scrollHeight-h.clientHeight);
+    bar.style.width = (sc*100)+'%';
+  });
+})();
+
+/* =====================================================================
+   KaTeX render
+   ===================================================================== */
+window.addEventListener('DOMContentLoaded',()=>{
+  if(window.renderMathInElement){
+    renderMathInElement(document.body,{
+      delimiters:[
+        {left:'$$',right:'$$',display:true},
+        {left:'$',right:'$',display:false},
+        {left:'\\(',right:'\\)',display:false},
+        {left:'\\[',right:'\\]',display:true}
+      ],
+      throwOnError:false
+    });
+  }
+});
+</script>
+</body>
+</html>
