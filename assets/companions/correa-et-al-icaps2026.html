@@ -112,6 +112,7 @@
   .term-row input:focus{outline:2px solid var(--accent);border-color:var(--accent)}
   .term-row select{font-family:"Spline Sans Mono";font-size:14px;border:1px solid var(--line);border-radius:6px;padding:6px;background:#fffdf6;color:var(--ink)}
   .term-row .xrm{padding:5px 9px;color:var(--muted);line-height:1}
+  .sasf{color:var(--accent-d);font-weight:600}
   .conc-feats{font-family:"Spline Sans Mono";font-size:14px;color:var(--ink);background:var(--dark);border-radius:10px;padding:11px 14px;margin-top:16px;word-break:break-word}
   .conc-feats var{color:#f0b46a;font-style:italic;font-weight:600;font-family:"Fraunces"}
   .spec .b small{font-size:10px}
@@ -178,7 +179,9 @@
   .ss-node.goal{stroke-dasharray:0;}
   .ss-label{font-family:"Spline Sans Mono";font-size:13px;fill:var(--ink);pointer-events:none}
   .ss-node.active ~ .ss-label{fill:#fff}
-  .ss-h{font-family:"Fraunces";font-weight:900;font-size:16px;fill:var(--green)}
+  .ss-h{font-family:"Spline Sans Mono",monospace;font-weight:700;font-size:15px;fill:#1c8a4e}
+  .nb{white-space:nowrap}
+  .katex-display{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:3px 1px}
   .ss-edge{stroke:var(--muted);stroke-width:2;fill:none;marker-end:url(#arrow)}
 
   /* representation cards */
@@ -320,30 +323,29 @@
 
     <p>A state \(s \in \mathcal{S}\) is a complete Boolean assignment to the variables in \(\mathcal{P}\). We represent the Boolean domain as \(\{0,1\}\).</p>
 
-    <p>An <em>\(s\)-plan</em> for \(\mathcal{T}\) is a sequence of states \(\pi = \langle s_0,\ldots,s_n\rangle\) where \(s_0 = s\), \(s_n \in S_*\), and \((s_{i-1}, s_i) \in T\) for all \(1 \leq i \leq n\). If an \(s_I\)-plan for \(\mathcal{T}\) exists, then the task represented by \(\mathcal{T}\) is <em>solvable</em>. The cost of an \(s\)-plan is the sum of the costs of all transitions in the plan. A <em>heuristic</em> \(h\) maps a state \(s \in \mathcal{S}\) to a number \(h(s) \in \mathbb{R}\cup\{\infty\}\), indicating the estimated cost of an \(s\)-plan. A heuristic value of \(\infty\) indicates a state without any \(s\)-plan, also called an <em>unsolvable state</em>. The <em>perfect heuristic</em> \(h^*\) maps each state \(s\) to the cost of a cheapest \(s\)-plan.</p>
+    <p>An <em>\(s\)-plan</em> for \(\mathcal{T}\) is a sequence of states \(\pi = \langle s_0,\ldots,s_n\rangle\) where \(s_0 = s\), \(s_n \in S_*\), and \((s_{i-1}, s_i) \in T\) for all <span class="nb">\(1 \leq i \leq n\).</span> If an \(s_I\)-plan for \(\mathcal{T}\) exists, then the task represented by \(\mathcal{T}\) is <em>solvable</em>. The cost of an \(s\)-plan is the sum of the costs of all transitions in the plan. A <em>heuristic</em> \(h\) maps a state \(s \in \mathcal{S}\) to a number \(h(s) \in \mathbb{R}\cup\{\infty\}\), indicating the estimated cost of an \(s\)-plan. A heuristic value of \(\infty\) indicates a state without any \(s\)-plan, also called an <em>unsolvable state</em>. The <em>perfect heuristic</em> \(h^*\) maps each state \(s\) to the cost of a cheapest \(s\)-plan.</p>
 
-    <p>A <em>feature</em> is a conjunction of literals with pairwise distinct variables. We say a feature \(f\) is true in a state \(s\) if \(s \models f\). We also use the Iverson brackets <span class="cite">(Knuth 1992)</span> \([f]\), which have value 1 if \(s \models f\) and 0 otherwise. The <em>size</em> of the feature \(f\) is the number of literals in \(f\).</p>
+    <p>A <em>feature</em> is a conjunction of literals with pairwise distinct variables. We say a feature \(f\) is true in a state \(s\) if \(s \models f\). We also use the Iverson brackets <span class="cite">(Knuth 1992)</span> \([f]\), which have value \(1\) if \(s \models f\) and \(0\) otherwise. The <em>size</em> of the feature \(f\) is the number of literals in \(f\).</p>
 
     <div class="box ex"><div class="lab">Example 1</div>
-    <div style="display:flex;gap:28px;align-items:center;flex-wrap:wrap">
-      <p style="flex:1 1 340px;margin:0">Consider the planning task where a binary counter starting at \(00\) needs to be incremented to \(11\). We use this task as a running example throughout the paper. We can represent a state of this task with a variable \(x\) for the most significant bit and a variable \(y\) for the least significant one. There exists a total of four states. We also define the initial state \(s_I = \{x\mapsto0,y\mapsto0\}\) and the single goal state \(s_* = \{x\mapsto1,y\mapsto1\}\). The transition relation \(T\) contains transitions \((s, s')\) where state \(s'\) represents a simple binary increment to \(s\). The function \(h^*(s)\), in this case, defines the number of increments needed from \(s\) to state \(11\). It is explicitly defined as \(h^*(00) = 3\), \(h^*(01) = 2\), \(h^*(10) = 1\), and \(h^*(11) = 0\).</p>
-      <figure style="flex:0 0 auto;margin:0;text-align:center">
-        <svg viewBox="0 0 262 224" width="248" style="max-width:100%" aria-label="state space of the binary counter with goal distances">
+    <div style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center">
+      <p style="flex:1 1 320px;min-width:0;margin:0">Consider the planning task where a binary counter starting at \(00\) needs to be incremented to \(11\). We use this task as a running example throughout the paper. We can represent a state of this task with a variable \(x\) for the most significant bit and a variable \(y\) for the least significant one. There exists a total of four states. We also define the initial state \(s_I = \{x\mapsto0,y\mapsto0\}\) and the single goal state \(s_* = \{x\mapsto1,y\mapsto1\}\). The transition relation \(T\) contains transitions \((s, s')\) where state \(s'\) represents a simple binary increment to \(s\). The function \(h^*(s)\), in this case, defines the number of increments needed from \(s\) to state \(11\). It is explicitly defined as \(h^*(00) = 3\), \(h^*(01) = 2\), \(h^*(10) = 1\), and \(h^*(11) = 0\).</p>
+      <figure style="flex:0 0 240px;width:240px;max-width:100%;margin:0;text-align:center">
+        <svg viewBox="10 -10 210 234" width="100%" style="display:block" aria-label="state space of the binary counter with goal distances">
           <defs>
             <marker id="arrowE1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
               <path d="M0,0 L7,3 L0,6 z" fill="var(--muted)"/>
             </marker>
           </defs>
-          <path d="M70,40 H150" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
-          <path d="M168,55 L82,150" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
-          <path d="M70,170 H150" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
-          <path d="M50,4 V12" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
-          <g><circle cx="50" cy="40" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="50" y="44" text-anchor="middle" class="ss-label">00</text><text x="84" y="32" text-anchor="middle" class="ss-h">3</text></g>
-          <g><circle cx="180" cy="40" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="180" y="44" text-anchor="middle" class="ss-label">01</text><text x="220" y="40" text-anchor="middle" class="ss-h">2</text></g>
-          <g><circle cx="50" cy="170" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="50" y="174" text-anchor="middle" class="ss-label">10</text><text x="12" y="174" text-anchor="middle" class="ss-h">1</text></g>
-          <g><circle cx="180" cy="170" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><circle cx="180" cy="170" r="30" fill="none" stroke="var(--green)" stroke-width="1.4"/><text x="180" y="174" text-anchor="middle" class="ss-label">11</text><text x="180" y="212" text-anchor="middle" class="ss-h">0</text></g>
+          <path d="M76,40 H151" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
+          <path d="M161.6,58.4 L68.4,151.6" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
+          <path d="M76,170 H151" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowE1)"/>
+          <g><circle cx="50" cy="40" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="50" y="45" text-anchor="middle" class="ss-label">00</text><text x="50" y="6" text-anchor="middle" class="ss-h">3</text></g>
+          <g><circle cx="180" cy="40" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="180" y="45" text-anchor="middle" class="ss-label">01</text><text x="180" y="6" text-anchor="middle" class="ss-h">2</text></g>
+          <g><circle cx="50" cy="170" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><text x="50" y="175" text-anchor="middle" class="ss-label">10</text><text x="50" y="214" text-anchor="middle" class="ss-h">1</text></g>
+          <g><circle cx="180" cy="170" r="26" fill="#fffdf6" stroke="var(--ink)" stroke-width="1.6"/><circle cx="180" cy="170" r="30" fill="none" stroke="var(--green)" stroke-width="1.4"/><text x="180" y="175" text-anchor="middle" class="ss-label">11</text><text x="180" y="214" text-anchor="middle" class="ss-h">0</text></g>
         </svg>
-        <figcaption class="small" style="margin-top:2px">Increment chain; green numbers are \(h^*\). The double-circled state is the goal.</figcaption>
+        <figcaption class="small" style="margin-top:8px;line-height:1.35">Increment chain; the green numbers are \(h^*\); the double-circled state is the goal.</figcaption>
       </figure>
     </div>
     </div>
@@ -352,7 +354,7 @@
   <h3>Potential Heuristics</h3>
   <div class="prose">
     <p>A <em>weight function</em> \(w: \mathcal{F} \to \mathbb{R}\) associates a set \(\mathcal{F}\) of features to real-valued weights. It represents a <em>potential heuristic</em> mapping a state \(s\) to the sum of weights for features of \(s\):</p>
-    <p style="text-align:center">\[ h^{\text{pot}}(s) = \sum_{f \in \mathcal{F}} w(f)\,[f] \]</p>
+    <p style="text-align:center">\[ h^{\text{pot}}(s) = \sum_{f \in \mathcal{F}} w(f)\,[f]. \]</p>
     <p>Note that two distinct weight functions can represent the same heuristic. For now, we consider only potential heuristics that represent <em>real-valued Boolean functions</em>.</p>
     <div class="note"><b>On infinite values.</b> There are different ways to adapt potential heuristics to infinite values (e.g., to represent unsolvable states). One can represent infinity as a number larger than the trivial upper bound for plan length, or use nested potential heuristics: one to discriminate solvable states, and one to estimate the distance <span class="cite">(Corr&ecirc;a and Pommerening 2019; Helmert et al. 2022)</span>.</div>
     <p>The <em>dimension</em> of a potential heuristic is the size of its largest feature in its representation with non-zero weight.</p>
@@ -360,53 +362,55 @@
 
     <div class="box ex"><div class="lab">Example 2</div>
     <p>The following potential heuristics represent the perfect heuristic \(h^*\) of our running example:</p>
-    <p style="text-align:center">\[ h_1(s) = 3 - 2[x] - 1[y], \quad h_2(s) = 2[\overline{x}] + 1[\overline{y}], \]</p>
+    <p style="text-align:center">\[ h_1(s) = 3 - 2[x] - 1[y], \]</p>
+    <p style="text-align:center">\[ h_2(s) = 2[\overline{x}] + 1[\overline{y}], \]</p>
     <p style="text-align:center">\[ h_3(s) = 3[\overline{x} \land \overline{y}] + 2[\overline{x} \land y] + 1[x \land \overline{y}]. \]</p>
     </div>
     <p>The widget below puts Examples 1 and 2 together. Pick a state of the binary counter, and watch the three representations all evaluate to \(h^*\).</p>
   </div>
 
 <div class="widget" id="w-equiv">
-    <div class="head"><span class="wnum">1</span><h4>Three representations, one function</h4><span class="tag">interactive</span></div>
+    <div class="head"><span class="wnum">1</span><h4>Three representations, one function</h4></div>
     <div class="body">
-      <div class="grid12">
+      <div class="grid12" style="align-items:start">
+        <div>
+          <figure style="margin:0;text-align:center">
+            <svg viewBox="10 -10 210 234" width="100%" style="max-width:300px" aria-label="state space of the binary counter">
+              <defs>
+                <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+                  <path d="M0,0 L7,3 L0,6 z" fill="var(--muted)"/>
+                </marker>
+              </defs>
+              <path class="ss-edge" d="M76,40 H151"/>
+              <path class="ss-edge" d="M161.6,58.4 L68.4,151.6"/>
+              <path class="ss-edge" d="M76,170 H151"/>
+              <g class="ss-state" data-x="0" data-y="0"><circle class="ss-node" cx="50" cy="40" r="26"/><text class="ss-label" x="50" y="45" text-anchor="middle">00</text><text class="ss-h" x="50" y="6" text-anchor="middle">3</text></g>
+              <g class="ss-state" data-x="0" data-y="1"><circle class="ss-node" cx="180" cy="40" r="26"/><text class="ss-label" x="180" y="45" text-anchor="middle">01</text><text class="ss-h" x="180" y="6" text-anchor="middle">2</text></g>
+              <g class="ss-state" data-x="1" data-y="0"><circle class="ss-node" cx="50" cy="170" r="26"/><text class="ss-label" x="50" y="175" text-anchor="middle">10</text><text class="ss-h" x="50" y="214" text-anchor="middle">1</text></g>
+              <g class="ss-state" data-x="1" data-y="1"><circle class="ss-node goal" cx="180" cy="170" r="26"/><circle cx="180" cy="170" r="30" fill="none" stroke="var(--green)" stroke-width="1.4"/><text class="ss-label" x="180" y="175" text-anchor="middle">11</text><text class="ss-h" x="180" y="214" text-anchor="middle">0</text></g>
+            </svg>
+            <figcaption class="small" style="margin-top:8px;line-height:1.35">Binary counter: increment <span class="mono">00 → 01 → 10 → 11</span>. The double-circled <span class="mono">11</span> is the goal; the green number by each state is <span class="mono">h*</span>. Click a state or use the toggles.</figcaption>
+          </figure>
+        </div>
         <div>
           <p class="small" style="margin-top:0">Set a state by toggling the bits:</p>
-          <div class="bits">
+          <div class="bits" style="margin-bottom:20px">
             <div class="bit"><span class="lbl">x</span><div class="switch" data-var="x"><span class="v0">0</span><span class="v1">1</span><span class="knob"></span></div></div>
             <div class="bit"><span class="lbl">y</span><div class="switch" data-var="y"><span class="v0">0</span><span class="v1">1</span><span class="knob"></span></div></div>
           </div>
-          <!-- state space -->
-          <svg viewBox="0 0 260 210" width="100%" style="margin-top:22px;max-width:300px" aria-label="state space of the binary counter">
-            <defs>
-              <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-                <path d="M0,0 L7,3 L0,6 z" fill="var(--muted)"/>
-              </marker>
-            </defs>
-            <path class="ss-edge" d="M70,40 H150"/>
-            <path class="ss-edge" d="M168,55 L82,150"/>
-            <path class="ss-edge" d="M70,170 H150"/>
-            <g class="ss-state" data-x="0" data-y="0"><circle class="ss-node" cx="50" cy="40" r="26"/><text class="ss-label" x="50" y="44" text-anchor="middle">00</text><text class="ss-h" x="50" y="12" text-anchor="middle">3</text></g>
-            <g class="ss-state" data-x="0" data-y="1"><circle class="ss-node" cx="180" cy="40" r="26"/><text class="ss-label" x="180" y="44" text-anchor="middle">01</text><text class="ss-h" x="218" y="44" text-anchor="middle">2</text></g>
-            <g class="ss-state" data-x="1" data-y="0"><circle class="ss-node" cx="50" cy="170" r="26"/><text class="ss-label" x="50" y="174" text-anchor="middle">10</text><text class="ss-h" x="12" y="174" text-anchor="middle">1</text></g>
-            <g class="ss-state" data-x="1" data-y="1"><circle class="ss-node goal" cx="180" cy="170" r="26"/><circle cx="180" cy="170" r="30" fill="none" stroke="var(--green)" stroke-width="1.4"/><text class="ss-label" x="180" y="174" text-anchor="middle">11</text><text class="ss-h" x="180" y="208" text-anchor="middle">0</text></g>
-          </svg>
-          <p class="small">Binary counter: increment <span class="mono">00 → 01 → 10 → 11</span>. The double-circled <span class="mono">11</span> is the goal; the green number next to each state is <span class="mono">h*</span>, the number of increments left. Click a state or use the toggles.</p>
-        </div>
-        <div>
           <div class="repcard" data-rep="h1">
             <div class="name">h₁ = 3 − 2[x] − [y]</div>
-            <div class="calc-row"><span class="brk"></span><span class="val"></span></div>
+            <div class="brk" style="margin:10px 0"></div>
             <div class="calc-row total"><span>value</span><span class="res">·</span></div>
           </div>
           <div class="repcard" data-rep="h2">
             <div class="name">h₂ = 2[x̄] + [ȳ]</div>
-            <div class="calc-row"><span class="brk"></span><span class="val"></span></div>
+            <div class="brk" style="margin:10px 0"></div>
             <div class="calc-row total"><span>value</span><span class="res">·</span></div>
           </div>
           <div class="repcard" data-rep="h3">
             <div class="name">h₃ = 3[x̄ȳ] + 2[x̄y] + [xȳ]</div>
-            <div class="calc-row"><span class="brk"></span><span class="val"></span></div>
+            <div class="brk" style="margin:10px 0"></div>
             <div class="calc-row total"><span>value</span><span class="res">·</span></div>
           </div>
         </div>
@@ -440,7 +444,7 @@
   </div>
 
 <div class="widget" id="w-fourier">
-    <div class="head"><span class="wnum">2</span><h4>Fourier expansion calculator</h4><span class="tag">edit the table</span></div>
+    <div class="head"><span class="wnum">2</span><h4>Fourier expansion calculator</h4></div>
     <div class="body">
       <div class="btnrow">
         <button class="btn" data-n="2">2 variables</button>
@@ -478,7 +482,7 @@
 
     <div class="box ex"><div class="lab">Example 4</div>
     <p>Let \(F_{h^*}\) be the Fourier expansion of the \(h^*\) function from Example 1. Loading the <span class="mono">h* (counter)</span> preset above computes it by interpolation:</p>
-    <p style="text-align:center">\[ h^*(s) = 3(1-x)(1-y) + 2(1-x)y + 1\,x(1-y) + 0\,xy = 3 - 2x - y = F_{h^*}(x,y). \]</p>
+    <p style="text-align:center">\[ \begin{aligned} h^*(s) &= 3(1-x)(1-y) + 2(1-x)y + 1\,x(1-y) + 0\,xy \\ &= 3 - 2x - y \\ &= F_{h^*}(x,y). \end{aligned} \]</p>
     <p>This is the unique multilinear polynomial representing \(h^*\) from Example 1.</p>
     </div>
 
@@ -488,14 +492,14 @@
     <p>Starting with \(h_1\) or \(h_2\) from our previous examples, we can compute \(F_{h^*}\) using the replacement rules just described above. From \(h_1(s) = 3 - 2[x] - 1[y]\), we obtain \(F_{h^*}\) immediately:</p>
     <p style="text-align:center">\[ F_{h^*}(x,y) = 3 - 2x - y. \]</p>
     <p>From \(h_2(s) = 2[\overline{x}] + 1[\overline{y}]\), we require some arithmetic:</p>
-    <p style="text-align:center">\[ F_{h^*}(x,y) = 2\cdot (1-x) + 1\cdot (1-y) = 2 - 2x + 1 - y = 3 - 2x - y. \]</p>
+    <p style="text-align:center">\[ \begin{aligned} F_{h^*}(x,y) &= 2\cdot (1-x) + 1\cdot (1-y) \\ &= 2 - 2x + 1 - y \\ &= 3 - 2x - y. \end{aligned} \]</p>
     <p>The case for \(h_3\) is left as an exercise.</p>
     </div>
     <p>The widget below lets you carry out these conversions for any potential representation over \(x, y\), including the \(h_3\) exercise. Select a starting representation:</p>
   </div>
 
 <div class="widget" id="w-convert">
-    <div class="head"><span class="wnum">3</span><h4>Potential Representation → Fourier expansion</h4><span class="tag">build your own</span></div>
+    <div class="head"><span class="wnum">3</span><h4>Potential Representation → Fourier expansion</h4></div>
     <div class="body">
       <div class="btnrow">
         <span class="small" style="align-self:center;color:var(--muted)">quick fill:</span>
@@ -537,6 +541,27 @@
   <div class="prose">
     <p>We create such a representation by rewriting features in Iverson brackets to a product of size 1 features. For example, \([x=1, y=3]\) becomes \([x = 1]\cdot[y = 3]\). Then, we replace \([x=1]\) with \((1-[x=2]-\dots-[x=|\textit{dom}(x)|])\) to remove all features that map to 1. After this representation shift, we use arithmetic to get a sum of products of size 1 features which we rewrite to larger features. None of these products has more factors than the ones we started with. Thus, the dimension of the created representation is not larger.</p>
   </div>
+
+  <div class="prose">
+    <p>In the widget below, you can create a potential heuristic over two SAS\(^+\) variables \(x, y\), each with domain \(\{1, 2, 3\}\), and reduce to an equivalent representation in which no feature maps a variable to value \(1\).</p>
+  </div>
+
+  <div class="widget" id="w-sasplus">
+    <div class="head"><span class="wnum">4</span><h4>SAS⁺: a representation without domain value 1</h4></div>
+    <div class="body">
+      <div class="btnrow">
+        <span class="small" style="align-self:center;color:var(--muted)">quick fill:</span>
+        <button class="btn" data-fill="h4">7[x=1, y=3]</button>
+        <button class="btn" data-fill="mix">mix</button>
+        <button class="btn" data-fill="rand">random</button>
+        <button class="btn" data-fill="clear">clear</button>
+      </div>
+      <div id="sas-terms"></div>
+      <button class="btn" id="sas-add" style="margin:2px 0 4px">+ add term</button>
+      <div class="steps" id="sas-steps" style="margin-top:16px"></div>
+      <p class="hint">Each variable ranges over the domain \(\{1, 2, 3\}\), with <span class="mono">any</span> meaning the variable is left out of the feature. Replacing \([v=1]\) with \((1 - [v=2] - [v=3])\) and collecting terms removes value \(1\) from every feature, without increasing the dimension (Proposition 4). A different default value, or larger domains, work the same way.</p>
+    </div>
+  </div>
 </section>
 
 <!-- ============================================================= -->
@@ -560,10 +585,10 @@
   </div>
 
 <div class="widget" id="w-stats">
-    <div class="head"><span class="wnum">4</span><h4>Same mean, different variance</h4><span class="tag">two heuristics</span></div>
+    <div class="head"><span class="wnum">5</span><h4>Same mean, different variance</h4></div>
     <div class="body">
       <div class="grid2" id="stats-grid"></div>
-      <p class="hint">Variance is computed in two ways that agree: directly from the values, and as <span class="mono">Σ_{S≠∅} ĥ(S)²</span> over the ±1 Fourier coefficients. Their equality is Parseval's identity, which underlies the proposition.</p>
+      <p class="hint">Variance is computed in two ways that agree: directly from the values, and as \(\sum_{S \neq \emptyset} \hat h(S)^2\) over the ±1 Fourier coefficients. Their equality is Parseval's identity <span class="cite">(O'Donnell 2014)</span>, which underlies the proposition.</p>
     </div>
   </div>
 
@@ -579,7 +604,7 @@
   </div>
 
 <div class="widget" id="w-concentration">
-      <div class="head"><span class="wnum">5</span><h4>Learning a heuristic from its main features</h4><span class="tag">keep the top terms</span></div>
+      <div class="head"><span class="wnum">6</span><h4>Learning a heuristic from its main features</h4></div>
       <div class="body">
         <div class="btnrow">
           <span class="small" style="align-self:center;color:var(--muted)">target heuristic over 4 bits <span class="mono">a,b,c,d</span>:</span>
@@ -587,6 +612,7 @@
           <button class="btn" data-fn="coupled">counter + interactions</button>
           <button class="btn" data-fn="spread">mixed task</button>
         </div>
+        <p class="small" id="conc-desc" style="margin:10px 0 4px"></p>
         <div class="small mono" style="margin-top:6px;color:var(--muted)">target heuristic h (its full Fourier expansion)</div>
         <div class="poly-out" id="conc-target" style="font-size:19px">·</div>
         <div style="margin-top:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
@@ -606,7 +632,7 @@
     </div>
 
   <div class="prose">
-    <p>For a heuristic \(h\) that is \(\epsilon\)-concentrated on \(\mathcal{C}\), we can learn an approximation of \(h\) to an accuracy \(O(\epsilon)\) with probability at least \(1 - \delta\) in time \(\mathrm{poly}(|\mathcal{C}|, 1/\epsilon)\,\mathrm{poly}(n)\,\log(1/\delta)\) with the use of <em>membership queries</em> <span class="cite">(Kushilevitz and Mansour 1991)</span>. Additionally, if \(\mathcal{C}\) only contains subsets with at most \(d\) variables (i.e., the most significant weights are in features of degree at most \(d\)) then <em>random queries</em> suffice <span class="cite">(Linial et al. 1993)</span>.</p>
+    <p>For a heuristic \(h\) that is <span class="nb">\(\epsilon\)-concentrated on \(\mathcal{C}\),</span> we can learn an approximation of \(h\) to an accuracy \(O(\epsilon)\) with probability at least \(1 - \delta\) in time \(\mathrm{poly}(|\mathcal{C}|, 1/\epsilon)\,\mathrm{poly}(n)\,\log(1/\delta)\) with the use of <em>membership queries</em> <span class="cite">(Kushilevitz and Mansour 1991)</span>. Additionally, if \(\mathcal{C}\) only contains subsets with at most \(d\) variables (i.e., the most significant weights are in features of degree at most \(d\)) then <em>random queries</em> suffice <span class="cite">(Linial et al. 1993)</span>.</p>
     <p>Note that this result is consistent with previous work that showed that \(h^*\) can be approximated well using only a few features with significant weights <span class="cite">(Corr&ecirc;a and Pommerening 2019)</span>.</p>
   </div>
 </section>
@@ -616,7 +642,7 @@
     <h3>Acknowledgments</h3>
     <p>This research was supported by the Swiss National Science Foundation (SNSF) as part of the project "Unifying the Theory and Algorithms of Factored State-Space Search" (UTA).</p>
     <h3>About this page</h3>
-    <p>This is an interactive companion to <em>"Potential Heuristics as Real-Valued Multilinear Polynomials"</em> by Augusto B. Corr&ecirc;a, Simon Dold, and Malte Helmert (ICAPS 2026). The prose reproduces the paper's text; the worked examples are replaced by the interactive widgets above (numbered 1&ndash;5). For all citations, proofs, and full references, see the paper itself.</p>
+    <p>This is an interactive companion to <em>"Potential Heuristics as Real-Valued Multilinear Polynomials"</em> by Augusto B. Corr&ecirc;a, Simon Dold, and Malte Helmert (ICAPS 2026). The prose reproduces the paper's text; the worked examples are replaced by the interactive widgets above (numbered 1&ndash;6). For all citations, proofs, and full references, see the paper itself.</p>
   </div>
 </footer>
 
@@ -673,7 +699,7 @@ function submasks(m){
       const data = r[id];
       const brk = data.terms.map(t=>{
         const on = Math.abs(t[1])>1e-9;
-        return `<span style="opacity:${on?1:.4};background:#fff8;border:1px solid var(--line);border-radius:6px;padding:2px 8px;white-space:nowrap;display:inline-block;margin:2px 4px 2px 0">${t[0]} = ${fmt(t[1])}</span>`;
+        return `<span style="opacity:${on?1:.4};background:#fff8;border:1px solid var(--line);border-radius:6px;padding:3px 9px;white-space:nowrap;display:block;width:fit-content;margin:5px 0">${t[0]} = ${fmt(t[1])}</span>`;
       }).join('');
       card.querySelector('.brk').innerHTML = brk;
       const res = card.querySelector('.res');
@@ -1070,9 +1096,14 @@ function submasks(m){
   const fns = {
     counter:(a,b,c,d)=> 15-(8*a+4*b+2*c+d),
     coupled:(a,b,c,d)=> 15-(8*a+4*b+2*c+d) + 3*(a&&d?1:0) + 2*(b&&c?1:0),
-    spread: (a,b,c,d)=> 9 - 3*a - 2*b - 2*c - d + 2*(a&&b?1:0) - 2*(c&&d?1:0) + (a&&c?1:0)
+    spread: (a,b,c,d)=> 9 - 3*a - 2*b - 2*c - d + 2*(a&&b?1:0) - 2*(c&&d?1:0) + 2*(a&&b&&c?1:0) - 2*(b&&c&&d?1:0)
   };
   let cur='counter';
+  const descs = {
+    counter:'The goal distance of a 4-bit counter: the number of increments from the state to 1111. It is purely linear, so only single-bit features carry weight.',
+    coupled:'The goal-distance heuristic for the 4-bit counter example with two additional features of degree-2.',
+    spread:'A made-up heuristic mixing single-bit features with interactions of degree 2 and 3, to show a less concentrated spectrum.'
+  };
   const root   = document.getElementById('w-concentration');
   const slider = document.getElementById('spec-slider');
 
@@ -1107,6 +1138,7 @@ function submasks(m){
   }
 
   function render(){
+    document.getElementById('conc-desc').textContent = descs[cur];
     const co=coeffs01(table(fns[cur]));
     const items=[]; for(let S=0;S<N;S++) if(Math.abs(co[S])>1e-9) items.push({S, a:co[S]});
     const nNZ=items.length;
@@ -1137,6 +1169,114 @@ function submasks(m){
   }));
   slider.addEventListener('input',render);
   render();
+})();
+
+/* =====================================================================
+   Widget 4 — SAS+ representation that avoids domain value 1 (Prop 4)
+   x, y over domain {1,2,3}; eliminate value 1 from every feature
+   ===================================================================== */
+(function(){
+  const root  = document.getElementById('w-sasplus');
+  if(!root) return;
+  const host  = document.getElementById('sas-terms');
+  const steps = document.getElementById('sas-steps');
+
+  let terms = [{w:7, fx:1, fy:3}];          // term = {w, fx, fy}; fx,fy in {0(any),1,2,3}
+  const presets = { h4:[[7,1,3]], mix:[[3,1,0],[2,0,1],[-1,1,2]] };
+
+  // expansion of [v=a] into the "no-1" basis {0(any),2,3}; [v=1] = 1 - [v=2] - [v=3]
+  function exp1(a){ if(a===0) return {0:1}; if(a===1) return {0:1,2:-1,3:-1}; if(a===2) return {2:1}; return {3:1}; }
+  const B=[0,2,3];
+  const feat1=(v,a)=>`<span class="sasf">[${v}=${a}]</span>`;
+  const featHTML=(fx,fy)=>{ const p=[]; if(fx>0)p.push('x='+fx); if(fy>0)p.push('y='+fy); return p.length?`<span class="sasf">[${p.join(', ')}]</span>`:''; };
+  const size=(bx,by)=>(bx>0?1:0)+(by>0?1:0);
+
+  function fmtTerms(items){
+    const nz=items.filter(it=>Math.abs(it.a)>1e-9);
+    if(!nz.length) return '0';
+    let out='';
+    nz.forEach((it,i)=>{
+      const coef=(it.html!=='' && Math.abs(Math.abs(it.a)-1)<1e-9)?'':fmt(Math.abs(it.a));
+      const sign=it.a<0?'−':(i===0?'':'+');
+      out+=(i===0?(it.a<0?'− ':''):' '+sign+' ')+coef+it.html;
+    });
+    return out;
+  }
+  const bracketLine=()=> fmtTerms(terms.map(t=>({a:t.w, html:featHTML(t.fx,t.fy)})));
+  const factorStr=(v,a)=> a===0?'' : a===1?('(1 − '+feat1(v,2)+' − '+feat1(v,3)+')') : feat1(v,a);
+  function substituteLine(){
+    if(!terms.length) return '0';
+    let out='';
+    terms.forEach((t,i)=>{
+      let prod=factorStr('x',t.fx)+factorStr('y',t.fy); if(prod==='')prod='1';
+      const aw=Math.abs(t.w);
+      const coef=(prod!=='1' && Math.abs(aw-1)<1e-9)?'':fmt(aw);
+      const sign=t.w<0?'−':(i===0?'':'+');
+      out+=(i===0?(t.w<0?'− ':''):' '+sign+' ')+coef+prod;
+    });
+    return out;
+  }
+  function expandLine(){
+    const segs=[];
+    terms.forEach(t=>{ const ex=exp1(t.fx),ey=exp1(t.fy);
+      B.forEach(bx=>B.forEach(by=>{ const c=t.w*(ex[bx]||0)*(ey[by]||0);
+        if(Math.abs(c)>1e-9){ let prod=''; if(bx>0)prod+=feat1('x',bx); if(by>0)prod+=feat1('y',by); segs.push({a:c,html:prod}); } }));
+    });
+    return fmtTerms(segs);
+  }
+  function resultItems(){
+    const res={};
+    terms.forEach(t=>{ const ex=exp1(t.fx),ey=exp1(t.fy);
+      B.forEach(bx=>B.forEach(by=>{ const c=t.w*(ex[bx]||0)*(ey[by]||0);
+        if(Math.abs(c)>1e-12){ const k=bx+','+by; res[k]=(res[k]||0)+c; } })); });
+    const items=[];
+    for(const k in res){ const [bx,by]=k.split(',').map(Number); if(Math.abs(res[k])>1e-9) items.push({a:res[k],bx,by,html:featHTML(bx,by)}); }
+    return items;
+  }
+  const resultLine=items=> fmtTerms(items.slice().sort((p,q)=> size(p.bx,p.by)-size(q.bx,q.by) || p.bx-q.bx || p.by-q.by));
+
+  function renderTerms(){
+    const opts=v=>['any','1','2','3'].map((lab,idx)=>`<option value="${idx}" ${idx===v?'selected':''}>${lab}</option>`).join('');
+    host.innerHTML = terms.map((t,i)=>`<div class="term-row">
+        <input type="number" step="1" data-i="${i}" data-k="w" value="${t.w}">
+        <span class="mono" style="color:var(--muted)">×</span>
+        <span class="mono small">x:</span><select data-i="${i}" data-k="fx">${opts(t.fx)}</select>
+        <span class="mono small">y:</span><select data-i="${i}" data-k="fy">${opts(t.fy)}</select>
+        <button class="btn xrm" data-i="${i}" title="remove term">✕</button>
+      </div>`).join('') || '<p class="small" style="color:var(--muted)">no terms — the heuristic is 0</p>';
+    host.querySelectorAll('input[data-k="w"]').forEach(inp=>inp.addEventListener('input',()=>{ terms[+inp.dataset.i].w=parseFloat(inp.value)||0; derive(); }));
+    host.querySelectorAll('select').forEach(sel=>sel.addEventListener('change',()=>{ terms[+sel.dataset.i][sel.dataset.k]=+sel.value; derive(); }));
+    host.querySelectorAll('.xrm').forEach(b=>b.addEventListener('click',()=>{ terms.splice(+b.dataset.i,1); renderTerms(); derive(); }));
+  }
+
+  function derive(){
+    const res=resultItems();
+    const dimOut=res.reduce((m,it)=>Math.max(m,size(it.bx,it.by)),0);
+    const dimIn=terms.reduce((m,t)=> Math.abs(t.w)>1e-9 ? Math.max(m,(t.fx>0?1:0)+(t.fy>0?1:0)) : m, 0);
+    const usesOne=terms.some(t=>Math.abs(t.w)>1e-9 && (t.fx===1||t.fy===1));
+    const strip=s=>s.replace(/<[^>]+>/g,'');
+    const seq=[['h(s)',bracketLine()]];
+    if(usesOne) seq.push(['substitute',substituteLine()],['expand',expandLine()]);
+    let prev=null; const lines=[];
+    seq.forEach(([lab,txt],i)=>{ if(i===0||strip(txt)!==strip(prev)){ lines.push(`<div class="s"><span class="op">${lab}</span>&nbsp; = ${txt}</div>`); prev=txt; } });
+    const hp=resultLine(res);
+    if(strip(hp)!==strip(prev)) lines.push(`<div class="s" style="color:var(--green);font-weight:600;font-size:17px;margin-top:4px">h&#39;(s)&nbsp; = ${hp}</div>`);
+    const note=usesOne ? `dimension ${dimIn} in, dimension ${dimOut} out — value 1 removed from every feature`
+                       : `every feature already avoids value 1 (dimension ${dimOut})`;
+    lines.push(`<div class="s" style="color:var(--muted);font-style:italic">${note}</div>`);
+    steps.innerHTML=lines.join('');
+  }
+
+  function load(arr){ terms=arr.map(([w,fx,fy])=>({w,fx,fy})); renderTerms(); derive(); }
+  root.querySelectorAll('[data-fill]').forEach(b=>b.addEventListener('click',()=>{
+    const f=b.dataset.fill;
+    if(f==='clear') load([]);
+    else if(f==='rand'){ const m=1+Math.floor(Math.random()*3); const t=[]; for(let i=0;i<m;i++){ let w=Math.floor(Math.random()*7)-3; if(w===0)w=2; t.push([w, Math.floor(Math.random()*4), Math.floor(Math.random()*4)]); } load(t); }
+    else load(presets[f]);
+  }));
+  document.getElementById('sas-add').addEventListener('click',()=>{ terms.push({w:1,fx:1,fy:0}); renderTerms(); derive(); });
+
+  renderTerms(); derive();
 })();
 
 /* =====================================================================
