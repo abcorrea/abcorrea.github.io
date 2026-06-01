@@ -23,7 +23,8 @@ arXiv:2605.16142, 2026. \
 
 - **Augusto B. Corrêa**, Simon Dold, Malte Helmert.\
  [Potential Heuristics as Real-Valued Multilinear Polynomials](../assets/pdf/correa-et-al-icaps2026.pdf).\
- In Proceedings of the 36th International Conference on Automated Planning and Scheduling (ICAPS 2026). 2026.
+ In Proceedings of the 36th International Conference on Automated Planning and Scheduling (ICAPS 2026). 2026.\
+ **ICAPS 2026 Best Paper Runner-up Award.**
 
 ## 2025
 
@@ -83,7 +84,8 @@ arXiv:2512.24940, 2025. \
 
 - **Augusto B. Corrêa**, Guillem Francès, Markus Hecher, Davide Mario Longo and Jendrik Seipp.\
  [Levitron: Combining Ground and Lifted Planning (planner abstract)](../assets/pdf/correa-et-al-ipc2023a.pdf).\
- In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.
+ In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.\
+ **Winner, IPC 2023 Classical Satisficing Track.**
 
 - **Augusto B. Corrêa**, Guillem Francès, Markus Hecher, Davide Mario Longo and Jendrik Seipp.\
  [The Powerlifted Planning System in the IPC 2023 (planner abstract)](../assets/pdf/correa-et-al-ipc2023b.pdf).\
@@ -91,7 +93,8 @@ arXiv:2512.24940, 2025. \
 
 - **Augusto B. Corrêa**, Guillem Francès, Markus Hecher, Davide Mario Longo and Jendrik Seipp.\
  [Scorpion Maidu: Width Search in the Scorpion Planning System (planner abstract)](../assets/pdf/correa-et-al-ipc2023c.pdf).\
- In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.
+ In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.\
+  **Winner, IPC 2023 Classical Satisficing Track.**
 
 - Daniel Doebber, André Grahl Pereira and **Augusto B. Corrêa**.\
  [OpCount4Sat: Operator Counting Heuristics for Satisficing Planning (planner abstract)](../assets/pdf/doebber-et-al-ipc2023.pdf).\
@@ -99,11 +102,14 @@ arXiv:2512.24940, 2025. \
 
 - Clemens Büchner, Remo Christen, **Augusto B. Corrêa**, Salomé Eriksson, Patrick Ferber, Jendrik Seipp and Silvan Sievers.\
  [Fast Downward Stone Soup 2023 (planner abstract)](../assets/pdf/buechner-et-al-ipc2023.pdf).\
- In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.
+ In Tenth International Planning Competition (IPC 2023), Deterministic Part. 2023.\
+ **Runner-Up, IPC 2023 Classical Satisficing Track.**\
+ **Runner-Up, IPC 2023 Classical Agile Track.**
 
 - **Augusto B. Corrêa**, Markus Hecher, Malte Helmert, Davide Mario Longo, Florian Pommerening and Stefan Woltran.\
  [Grounding Planning Tasks Using Tree Decompositions and Iterated Solving](../assets/pdf/correa-et-al-icaps2023.pdf).\
- In Proceedings of the 33rd International Conference on Automated Planning and Scheduling (ICAPS 2023). 2023.
+ In Proceedings of the 33rd International Conference on Automated Planning and Scheduling (ICAPS 2023). 2023.\
+  **ICAPS 2023 Best Student Paper Runner-up Award.**
 
 - **Augusto B. Corrêa**, Clemens Büchner and Remo Christen.\
  [Zero-Knowledge Proofs for Classical Planning Problems](../assets/pdf/correa-et-al-aaai2023.pdf).\
@@ -114,7 +120,8 @@ arXiv:2512.24940, 2025. \
 
 - Lucas Galery Käser, Clemens Büchner, **Augusto B. Corrêa**, Florian Pommerening and Gabriele Röger.\
  [Machetli: Simplifying Input Files for Debugging](../assets/pdf/galery-kaeser-et-al-icaps2022demo.pdf).\
- In System Demonstrations at the 32nd International Conference on Automated Planning and Scheduling (ICAPS 2022). 2022.
+ In System Demonstrations at the 32nd International Conference on Automated Planning and Scheduling (ICAPS 2022). 2022.\
+ **ICAPS 2022 Best System Demonstration Award.**
 
 - Mohammad Abdulaziz, Florian Pommerening and **Augusto B. Corrêa**.\
  [Mechanically Proving Guarantees of Generalized Heuristics: First Results and Ongoing Work](../assets/pdf/abdulaziz-et-al-icaps2022wshsdip.pdf).\
