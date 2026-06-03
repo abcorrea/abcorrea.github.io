@@ -907,6 +907,20 @@ pre {
   }
 }
 
+// Markdown fenced blocks (e.g. quoted prompts) are mostly plain, untokenized
+// text, so the base `pre` rule paints them with the orange theme color. Use the
+// normal readable foreground instead, and soft-wrap long lines rather than
+// scrolling. Scoped to `.language-md` so real code blocks are unaffected.
+.language-md.highlighter-rouge {
+  pre,
+  code {
+    color: var(--global-text-color);
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+}
+
 code {
   color: var(--global-theme-color);
   background-color: var(--global-code-bg-color);
