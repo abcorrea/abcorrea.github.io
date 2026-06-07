@@ -158,6 +158,15 @@ announcements:
   limit: 5 # leave blank to include all the news in the `_news` folder
 
 # -----------------------------------------------------------------------------
+# Pagination
+# -----------------------------------------------------------------------------
+
+# jekyll-paginate-v2 needs this global block enabled for the blog page's
+# in-page pagination (configured in _pages/blog.md) to populate `paginator`.
+pagination:
+  enabled: true
+
+# -----------------------------------------------------------------------------
 # Jekyll settings
 # -----------------------------------------------------------------------------
 
@@ -254,8 +263,8 @@ jekyll-archives:
     tag: "/blog/tag/:name/"
     category: "/blog/category/:name/"
 
-display_tags: ["formatting", "images", "links", "math", "code", "blockquotes"] # these tags will be displayed on the front page of your blog
-display_categories: ["external-services"] # these categories will be displayed on the front page of your blog
+display_tags: [] # these tags will be displayed on the front page of your blog
+display_categories: [] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
