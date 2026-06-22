@@ -21,7 +21,9 @@ manage_gemfile_lock() {
 
 start_jekyll() {
     manage_gemfile_lock
-    bundle exec jekyll serve --watch --port=8080 --host=0.0.0.0 --livereload --verbose --trace --force_polling &
+    echo "Open the site at http://localhost:8080"
+    echo "LiveReload is exposed on localhost:35729; do not open the 0.0.0.0 address in a browser."
+    bundle exec jekyll serve --watch --port=8080 --host=0.0.0.0 --livereload --livereload-port=35729 --verbose --trace --force_polling &
 }
 
 start_jekyll
