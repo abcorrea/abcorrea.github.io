@@ -24,8 +24,8 @@ Best values per domain are shown in <strong>bold</strong>. Entries in <em>italic
 baseline planners (not LLM-generated heuristics).
 
 <blockquote class="block-warning">
-<h5>Last Update (2026-02-21)</h5>
-  <p style="font-size: 1rem;">Added results for GPT 5.2, Gemini 3 Pro (Preview) and Gemini 3.1 Pro (Preview).</p>
+<h5>Last Update (2026-07-01)</h5>
+  <p style="font-size: 1rem;">Added results for GPT-5.5.</p>
 </blockquote>
 
 <br>
@@ -73,7 +73,7 @@ function numericSort(a, b) {
       <td><strong>460</strong></td>
       <td><strong>84</strong></td>
       <td>58</td>
-      <td><strong>30</strong></td>
+      <td>30</td>
       <td>83</td>
       <td>53</td>
       <td>31</td>
@@ -90,7 +90,7 @@ function numericSort(a, b) {
       <td>40</td>
       <td>30</td>
       <td>68</td>
-      <td><strong>70</strong></td>
+      <td>70</td>
     </tr>
     <tr>
       <td><em>Fast Down. Stone Soup'23</em></td>
@@ -103,6 +103,18 @@ function numericSort(a, b) {
       <td><strong>40</strong></td>
       <td>64</td>
       <td>64</td>
+    </tr>
+    <tr>
+      <td>GPT-5.5</td>
+      <td>447</td>
+      <td>76</td>
+      <td>58</td>
+      <td><strong>31</strong></td>
+      <td>81</td>
+      <td>32</td>
+      <td>32</td>
+      <td>66</td>
+      <td><strong>71</strong></td>
     </tr>
     <tr>
       <td>Gemini 3 Pro (Preview)</td>
