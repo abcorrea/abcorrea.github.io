@@ -7,6 +7,10 @@ tags: [planning, llms, experiments]
 categories: [agentic-coding]
 ---
 
+<blockquote class="block-tip">
+  <p><strong>Update:</strong> An improved and checked version of this translation was merged into the <a href="https://github.com/jendrikseipp/scorpion/commit/66a77f191561fc147b9ca3a059c079f6431f835b">Scorpion planner</a>.</p>
+</blockquote>
+
 
 There was a lot of talk about the recent [Bun rewrite in
 Rust](https://github.com/oven-sh/bun/pull/30412). Anthropic [acquired
