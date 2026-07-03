@@ -309,6 +309,28 @@
   }
   .toggle-btn:hover { color: var(--text-primary); }
 
+  .chip-group {
+    display: flex;
+    gap: 2px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .chip {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .chip:hover { color: var(--text-primary); }
+  .chip.active { background: var(--surface-1); color: var(--series-1); box-shadow: var(--shadow); }
+
   table.rank-table {
     width: 100%;
     border-collapse: collapse;
@@ -476,6 +498,13 @@
         <p class="desc" style="margin-bottom:0;">Total citations summed across every ICAPS 2020–2025 paper each author co-authored. Search across all <span id="authors-total">–</span> authors, or sort any column.</p>
       </div>
       <div class="controls">
+        <div class="chip-group" id="authors-min-papers" role="group" aria-label="Filter by minimum number of papers">
+          <button class="chip active" data-min="1">All</button>
+          <button class="chip" data-min="2">2+ papers</button>
+          <button class="chip" data-min="3">3+ papers</button>
+          <button class="chip" data-min="5">5+ papers</button>
+          <button class="chip" data-min="10">10+ papers</button>
+        </div>
         <input class="search-input" id="authors-search" type="text" placeholder="Search author…" />
         <button class="toggle-btn" id="authors-toggle">Show all</button>
       </div>
@@ -626,13 +655,17 @@
     let sortDir = defaultSortDir;
     let query = "";
     let showAll = false;
+    let extraFilter = opts.extraFilter || null;
 
     function normalize(s) { return s.toLowerCase(); }
 
     function getFiltered() {
-      if (!query) return rows;
-      const q = normalize(query);
-      return rows.filter(r => searchFields(r).some(f => normalize(f).includes(q)));
+      let list = extraFilter ? rows.filter(extraFilter) : rows;
+      if (query) {
+        const q = normalize(query);
+        list = list.filter(r => searchFields(r).some(f => normalize(f).includes(q)));
+      }
+      return list;
     }
 
     function getSorted(list) {
@@ -671,8 +704,10 @@
       toggleBtn.textContent = willShowAll ? "Show top " + topN : "Show all";
       toggleBtn.style.display = (!query && filtered.length > topN) ? "" : "none";
 
-      countNoteEl.textContent = query
-        ? `Showing ${display.length.toLocaleString("en-US")} of ${filtered.length.toLocaleString("en-US")} matching "${query}" (of ${rows.length.toLocaleString("en-US")} total).`
+      const filterLabel = opts.filterLabel ? opts.filterLabel() : "";
+      const qualifiers = [query ? `matching "${query}"` : "", filterLabel].filter(Boolean).join(" ");
+      countNoteEl.textContent = qualifiers
+        ? `Showing ${display.length.toLocaleString("en-US")} of ${filtered.length.toLocaleString("en-US")} ${qualifiers} (of ${rows.length.toLocaleString("en-US")} total).`
         : `Showing ${display.length.toLocaleString("en-US")} of ${rows.length.toLocaleString("en-US")} total.`;
     }
 
@@ -681,6 +716,11 @@
 
     return {
       render,
+      setExtraFilter(fn) {
+        extraFilter = fn;
+        showAll = false;
+        render();
+      },
       setSort(key, headerEls) {
         if (sortKey === key) {
           sortDir = sortDir === "asc" ? "desc" : "asc";
@@ -750,6 +790,7 @@
 
   // ---------- Authors table ----------
   const authorsRows = DATA.top_authors;
+  let authorsMinPapers = 1;
   const authorsTableCtl = makeTable({
     rows: authorsRows,
     bodyEl: document.getElementById("authors-body"),
@@ -761,6 +802,7 @@
     defaultSortDir: "desc",
     topN: 50,
     searchFields: r => [r.name],
+    filterLabel: () => (authorsMinPapers > 1 ? `with ${authorsMinPapers}+ papers` : ""),
     renderRow: (r, i) => {
       const tr = document.createElement("tr");
       tr.appendChild(td(String(i + 1), "rank-cell"));
@@ -771,6 +813,15 @@
       tr.appendChild(td(r.years_active.join(", "), "year-cell"));
       return tr;
     },
+  });
+
+  document.querySelectorAll('#authors-min-papers .chip').forEach(chip => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll('#authors-min-papers .chip').forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      authorsMinPapers = parseInt(chip.dataset.min, 10);
+      authorsTableCtl.setExtraFilter(authorsMinPapers > 1 ? (r => r.paper_count >= authorsMinPapers) : null);
+    });
   });
 
   document.querySelectorAll('#papers-table th[data-key]').forEach(h => {
