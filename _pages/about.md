@@ -25,7 +25,7 @@ My Ph.D. thesis, *Planning with Different Representations*, received the **[ICAP
 
 Before Oxford, I obtained my Ph.D. and M.Sc. at the [University of Basel](https://ai.dmi.unibas.ch/), Switzerland, supervised by [Prof. Malte Helmert](https://ai.dmi.unibas.ch/people/helmert/), and my B.Sc. at the [Federal University of Rio Grande do Sul](https://www.inf.ufrgs.br/site/en), Brazil, supervised by [Prof. André G. Pereira](https://www.inf.ufrgs.br/~agpereira/) and [Prof. Marcus Ritt](https://www.inf.ufrgs.br/~mrpritt/).
 
-I currently also co-organise the **[LM4Plan Workshop](https://lm4plan.github.io/)** (Language Models for Planning) at ICAPS and ICML.
+For more details, see my [academic CV](/assets/pdf/cv-academic.pdf) or [its shorter version](/assets/pdf/cv-industry.pdf).
 
 <br>
 
