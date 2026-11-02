@@ -1,0 +1,6 @@
+# Bare domains used for preconnect/credits; they return 404/401 to bots.
+^https://fonts\.googleapis\.com/?$
+^https://fonts\.gstatic\.com/?$
+^https://unsplash\.com/?$
+# Links into upstream al-folio docs (FAQ.md, INSTALL.md) whose headings change.
+^https://github\.com/alshedivat/al-folio/blob/

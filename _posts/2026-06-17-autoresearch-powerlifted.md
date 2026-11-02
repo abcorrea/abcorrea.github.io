@@ -87,7 +87,7 @@ All of it was evaluated on a micro-suite on my laptop, so I ran a proper
 experiment with [lab](https://lab.readthedocs.io/en/stable/): a combination of
 IPC domains from the
 [downward-benchmarks](https://github.com/aibasel/downward-benchmarks/) and the
-[hard-to-ground](github.com/abcorrea/htg-domains/) suites. I used 1800 seconds
+[hard-to-ground](https://github.com/abcorrea/htg-domains/) suites. I used 1800 seconds
 and 16 GiB per task, which I always did when evaluating Powerlifted for papers,
 and compared the final commit against the baseline planner.
 
