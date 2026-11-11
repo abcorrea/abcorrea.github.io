@@ -17,13 +17,11 @@ social: false  # includes social icons at the bottom of the page
 
 <br>
 
-**Hi!**
+I am a Junior Research Fellow at [Christ Church](https://www.chch.ox.ac.uk/), University of Oxford. My current interest is **how LLMs can automate research**, with a focus on automated planning. I study this through self-improvement and interaction with formal systems such as planners and proof assistants.
 
-I am a **Junior Research Fellow** at [Christ Church](https://www.chch.ox.ac.uk/), University of Oxford. My research focuses on **safe and trustworthy AI** — specifically, how to ensure that AI systems that plan and act in the world do so reliably and correctly. I work on automated planning, the formal foundations of AI, and the intersection of **classical planning and large language models**.
+My recent work shows that **LLMs can design state-of-the-art heuristics for planning domains** (NeurIPS 2025, NeurIPS 2026), and that coding agents can [improve a planner on their own]({% post_url 2026-06-17-autoresearch-powerlifted %}). My research was also **featured in the Stanford AI Index Report 2026**.
 
-My Ph.D. thesis, *Planning with Different Representations*, received the **[ICAPS Outstanding Dissertation Award](https://www.icaps-conference.org/icaps-awards/)** (2025). I am the creator of [Powerlifted](https://github.com/abcorrea/powerlifted), one of the most popular lifted (i.e., first-order) planners in the literature. My planners Scorpion Maidu and Levitron **won the Classical Satisficing Track of the 2023 International Planning Competition**. More recently, I've been working on using LLMs to generate heuristic functions for planning, with a recent paper at **NeurIPS 2025** and a **Google Gemini Academic Program Award** (2026) supporting this line of research.
-
-Before Oxford, I obtained my Ph.D. and M.Sc. at the [University of Basel](https://ai.dmi.unibas.ch/), Switzerland, supervised by [Prof. Malte Helmert](https://ai.dmi.unibas.ch/people/helmert/), and my B.Sc. at the [Federal University of Rio Grande do Sul](https://www.inf.ufrgs.br/site/en), Brazil, supervised by [Prof. André G. Pereira](https://www.inf.ufrgs.br/~agpereira/) and [Prof. Marcus Ritt](https://www.inf.ufrgs.br/~mrpritt/).
+Before Oxford, I obtained my Ph.D. and M.Sc. at the [University of Basel](https://ai.dmi.unibas.ch/), Switzerland, supervised by [Prof. Malte Helmert](https://ai.dmi.unibas.ch/people/helmert/). My Ph.D. thesis received the [ICAPS Outstanding Dissertation Award](https://www.icaps-conference.org/icaps-awards/) (2025). I created the [Powerlifted](https://github.com/abcorrea/powerlifted) planning system, and my planners Scorpion Maidu and Levitron won the 2023 International Planning Competition.
 
 For more details, see my [academic CV](/assets/pdf/cv-academic.pdf) or [its shorter version](/assets/pdf/cv-industry.pdf).
 
@@ -32,4 +30,3 @@ For more details, see my [academic CV](/assets/pdf/cv-academic.pdf) or [its shor
 ## News
 
 {% include news.liquid %}
-

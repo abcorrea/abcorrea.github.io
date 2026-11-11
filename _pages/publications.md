@@ -11,14 +11,24 @@ experimental data. If not, feel free to ask by email.
 
 ## 2026
 
+- André G. Pereira, **Augusto B. Corrêa**, Felipe Meneguzzi and Jendrik Seipp.\
+ [LeanPlan: Optimal Planning with LLM-Generated Heuristics and Admissibility Proofs](https://arxiv.org/abs/2610.08246).\
+arXiv:2610.08246, 2026. \
+[(arXiv)](https://arxiv.org/abs/2610.08246)
+
+- **Augusto B. Corrêa**, André G. Pereira and Jendrik Seipp.\
+ [Frontier Large Language Models Are Becoming Competitive with State-of-the-Art Planners](https://arxiv.org/abs/2511.09378).\
+ Communications of the ACM (CACM). (to appear)\
+[(arXiv version)](https://arxiv.org/abs/2511.09378)
+
 - Felipe Meneguzzi, Alexandre Buchweitz, **Augusto B. Corrêa**, Victor Scherer Putrich and André Grahl Pereira.\
  [Hierarchical Task Network Planning with LLM-Generated Heuristics](../assets/pdf/meneguzzi-et-al-arxiv2026.pdf).\
-arXiv:2605.07707, 2026. \
+ In Proceedings of the 40th Annual Conference on Neural Information Processing Systems (NeurIPS 2026). 2026.\
 [(arXiv)](https://arxiv.org/abs/2605.07707)
 
 - André G. Pereira, **Augusto B. Corrêa** and Jendrik Seipp.\
  [Property-Guided LLM Program Synthesis for Planning](../assets/pdf/pereira-et-al-arxiv2026.pdf).\
-arXiv:2605.16142, 2026. \
+ In Proceedings of the 40th Annual Conference on Neural Information Processing Systems (NeurIPS 2026). 2026.\
 [(arXiv)](https://arxiv.org/abs/2605.16142)
 
 - **Augusto B. Corrêa**, Simon Dold, Malte Helmert.\
@@ -43,7 +53,7 @@ arXiv:2512.24940, 2025. \
 
 - **Augusto B. Corrêa**, André G. Pereira and Jendrik Seipp.\
   [Classical Planning with LLM-Generated Heuristics: Challenging the State of the Art with Python Code](../assets/pdf/correa-et-al-neurips2025.pdf).\
-  In Proceedings of the 39th Annual Conference on Neural Information Processing Systems.\
+  In Proceedings of the 39th Annual Conference on Neural Information Processing Systems (NeurIPS 2025). 2025.\
   [(arXiv)](https://arxiv.org/abs/2503.18809)[(code)](https://doi.org/10.5281/zenodo.17400964).
 
 - David Speck, Markus Hecher, Daniel Gnad, Johannes K. Fichte and **Augusto B. Corrêa**.\
